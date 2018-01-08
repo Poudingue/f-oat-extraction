@@ -1,0 +1,8 @@
+1) Backend -> Service : GET liste paramètre (voir la liste des outils?)
+2) Backend -> Service : POST paramètre
+3) Backend -> Service : POST URL ou les datas à utiliser
+Problème : il faut nécessairement 2 et 3 avant de pouvoir utiliser l'outil.
+solutions : _ fusionner 2 et 3?
+            _ peut-on redirect ou attendre une requête POST dans une requête POST?
+4)Lancer le script avec les paramètres reçus sur l'url ou le file en local
+5)Service -> Backend : POST le xml extrait.
