@@ -2,7 +2,6 @@
 2) Backend -> Service : POST paramètre
 3) Backend -> Service : POST URL ou les datas à utiliser
 Problème : il faut nécessairement 2 et 3 avant de pouvoir utiliser l'outil.
-solutions : _ fusionner 2 et 3?
-            _ peut-on redirect ou attendre une requête POST dans une requête POST?
+solutions : les datas OU l'URL sont reçues impérialement avant les paramètres, et stockées
 4)Lancer le script avec les paramètres reçus sur l'url ou le file en local
 5)Service -> Backend : POST le xml extrait.
