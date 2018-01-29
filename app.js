@@ -6,11 +6,7 @@ var http = require('http')
 var url = require('url')
 const { exec } = require('child_process')
 var base64 = require('base-64')
-var AsyncLock = require('async-lock')
-var lock = new AsyncLock();
-static var idlist = new ArrayList;
-static var id = 0;
-static var idurl = (int,String);
+var mkdirp = require('mkdirp')
 
 //Moteur de template
 app.set('view engine','ejs')
@@ -52,20 +48,26 @@ app.get('/outil_list', (request, response) =>{
     }
   })
 })
-/**/
+
 app.post('/param', jsonParser, (request, response) =>{
   if(!request.body) return response.end("Erreur dans le paramétrage")
   //on reçoit les paramètres en format JSON, il faut maintenant pouvoir l'exploiter pour le script
-  var param = request.body
+  var param = request.body;
   console.log(param)
-  const paramrecu = JSON.parse(param)
+  var paramrecu = JSON.parse(param)
   console.log(paramrecu);
+  var id = paramrecu.id
+  var option[] = {paramrecu.option1, paramrecu.option2, paramrecu.option3}
+  //faire ça mieux?
+  mkdirp('/'+id, function (err) {
+    if(err) console.error(err)
+    else console.log("dossier "+ id +" correctement créé")
+    //créer un lock?
+});
 
-  /*TODO : recevoir/lire les paramètres correctement
-  *si url -> script_adress_auto sinon script
-  *comment répurer l'url et le nom du fichier?
-  *envoyer directement vers script_adress_auto
-  */
+  //recevoir la vidéo :
+  getVideo(id);
+  //partie execution, peut-être à exclure de la fonction.
   exec('sudo bash /home/primary/service/service_server/script_adress_auto.sh ', (error, stdout, stderr) =>{
     if (error) {
       console.error(`exec error: ${error}`);
@@ -76,20 +78,26 @@ app.post('/param', jsonParser, (request, response) =>{
   }
 }
   //renvoyer une autre requête POST à la fin?
-  response.end("Paramètres bien reçus : " + paramrecu)
+  response.end("Paramètres bien reçus")
 })
 
-/**/
+//envoie la requête de get avec l'id à la base de donnée du backend
+function getVideo(id){
+exec('curl XGET -d http://adresseserveur/basededonnées/'+id, (error, stdout, stderr) =>{
+if (error) {
+  console.error(`exec error: ${error}`);
+  return;
+}
+console.log(`stdout: ${stdout}`);
+console.log(`stderr: ${stderr}`);
+});
+};
+
+/*
 app.post('/extractorVID', rawParser, (request, response) =>{
 if(!request.body) { return response.end("Erreur, pas de données") }
-  //on veut protéger id d'une éventuelle erreur de synchro
-  lock.acquire(id, function(done){
-  id = id++;
-  idurl = (id,null);
-  idlist.add(idurl);
-  done(err,ret);
-}, function(err,ret){
-});
+
+
   //on decode le base64
   var rawParsed = request.body
   var test = toType(rawParsed)
@@ -100,22 +108,14 @@ if(!request.body) { return response.end("Erreur, pas de données") }
   response.end("Got a POST request")
 })
 
-/*
-*/
+
+
 app.post('/extractorURL', urlParser, (request, response) =>{
   if(!request.body) { return response.end("Erreur avec l'url") }
   var urlreceived = request.body
-  //on veut protéger id d'une éventuelle erreur de synchro
-  lock.acquire(id, function(done){
-  id = id++;
-  idurl = (id,request.body);
-  idlist.add(idurl);
-  done(err,ret);
-}, function(err,ret){
-});
 
 }
-
+*/
 app.put('/', (request, response) =>{
   response.end("Got a PUT request")
 })

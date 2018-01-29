@@ -1,7 +1,6 @@
 1) Backend -> Service : GET liste paramètre (voir la liste des outils?)
-2) Backend -> Service : POST paramètre
-3) Backend -> Service : POST URL ou les datas à utiliser
-Problème : il faut nécessairement 2 et 3 avant de pouvoir utiliser l'outil.
-solutions : les datas OU l'URL sont reçues impérialement avant les paramètres, et stockées
-4)Lancer le script avec les paramètres reçus sur l'url ou le file en local
+2) Backend -> Service : POST URL ou les datas à utiliser -> on créé le dossier avec la video/url
+3) Backend -> Service : POST paramètres -> ajout au dossier les paramètres
+4)Lancer le script avec les paramètres reçus sur l'url ou le file en local (dans le dossier)
 5)Service -> Backend : POST le xml extrait.
+6) suppression au bout de X temps?
