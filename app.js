@@ -38,7 +38,7 @@ app.get('/outil_list', (request, response) =>{
     if(err) throw err;
     else {
       try{
-        const parsedData = JSON.stringify(data);
+        var parsedData = JSON.stringify(data);
         console.log(parsedData);
         response.write("\n Done ! \n")
         response.end(parsedData);
@@ -59,14 +59,6 @@ app.post('/param', jsonParser, (request, response) =>{
   var id = paramrecu.id
   var option[] = {paramrecu.option1, paramrecu.option2, paramrecu.option3}
   //faire ça mieux?
-  mkdirp('/'+id, function (err) {
-    if(err) console.error(err)
-    else console.log("dossier "+ id +" correctement créé")
-    //créer un lock?
-});
-
-  //recevoir la vidéo :
-  getVideo(id);
   //partie execution, peut-être à exclure de la fonction.
   exec('sudo bash /home/primary/service/service_server/script_adress_auto.sh ', (error, stdout, stderr) =>{
     if (error) {
@@ -91,13 +83,44 @@ if (error) {
 console.log(`stdout: ${stdout}`);
 console.log(`stderr: ${stderr}`);
 });
-};
+}
 
-/*
+function getUrlVideo(url){
+  exec('curl XGET -d '+url)
+  if (error) {
+    console.error(`exec error: ${error}`);
+    return;
+  }
+  console.log(`stdout: ${stdout}`);
+  console.log(`stderr: ${stderr}`);
+  });
+}
+
+app.post('/premierenvoi', jsonParser, (request, response) =>{
+  if(!request.body) { return response.end("Erreur, pas de données") }
+  var reqjson = requete.body;
+  var reqparsed = JSON.parse(reqjson);
+  var id = reqparsed.id;
+  //test checksum ou url?
+  if(reqparsed.url!=null){
+
+
+  }
+  // var type = checksum OU url
+
+// créer un dossier
+  mkdirp('/'+id, function (err) {
+    if(err) console.error(err)
+    else console.log("dossier "+ id +" correctement créé")
+    //créer un lock?
+  });
+
+
+  //recevoir la video
+    getVideo(id);
+});
+
 app.post('/extractorVID', rawParser, (request, response) =>{
-if(!request.body) { return response.end("Erreur, pas de données") }
-
-
   //on decode le base64
   var rawParsed = request.body
   var test = toType(rawParsed)
@@ -109,7 +132,7 @@ if(!request.body) { return response.end("Erreur, pas de données") }
 })
 
 
-
+/*
 app.post('/extractorURL', urlParser, (request, response) =>{
   if(!request.body) { return response.end("Erreur avec l'url") }
   var urlreceived = request.body
