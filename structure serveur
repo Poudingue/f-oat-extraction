@@ -25,7 +25,21 @@ Processus «Receptionniste» :
         }
     }
 
-Processus «Extracteur» :
+Processus «Downloader» :
+    récupère une vidéo depuis le back-end.
+    lance l'extraction sur un fichier
+
+Processus «Extracteur» par lien:
+    prend une url et un id en paramètre.
+    va dl la vidéo
+    Va s'occuper d'extraire les infos de la vidéo correspondante
+    (timeout ?)
+    (Renvoyer un pourcentage au backend ?)
+    Extrait ? {
+        Lance l'expediteur
+    }
+
+Processus «Extracteur» par fichier :
     prend un id en paramètre.
     Va s'occuper d'extraire les infos de la vidéo correspondante
     (timeout ?)
