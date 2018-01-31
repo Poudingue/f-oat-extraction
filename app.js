@@ -13,8 +13,8 @@ app.set('view engine','ejs')
 
 //Middleware
 app.use("/assets", express.static('public'))
-var urlParser = bodyParser.urlencoded({limit: '5mb', extended: true})
-var rawParser = bodyParser.raw({limit: '5mb', type : '*/*'})
+var urlParser = bodyParser.urlencoded({limit: '100kb', extended: true})
+var vidParser = bodyParser.text({limit: '50mb', type : '*/*'})
 var jsonParser = bodyParser.json()
 //session?
 
@@ -26,7 +26,7 @@ var toType = function(obj) {
 
 //peut-être renvoyer la liste des outils?
 app.get('/', (request, response) =>{
-  response.end("ok")
+  response.end("Ici le service d'extraction")
   //response.render('/pages/index')
 })
 
@@ -58,24 +58,13 @@ app.post('/param', jsonParser, (request, response) =>{
   console.log(paramrecu);
   var id = paramrecu.id
   var option[] = {paramrecu.option1, paramrecu.option2, paramrecu.option3}
-  //faire ça mieux?
-  //partie execution, peut-être à exclure de la fonction.
-  exec('sudo bash /home/primary/service/service_server/script_adress_auto.sh ', (error, stdout, stderr) =>{
-    if (error) {
-      console.error(`exec error: ${error}`);
-      return;
-    }
-    console.log(`stdout: ${stdout}`);
-    console.log(`stderr: ${stderr}`);
-  }
-}
-  //renvoyer une autre requête POST à la fin?
+  //notifier
   response.end("Paramètres bien reçus")
 })
 
 //envoie la requête de get avec l'id à la base de donnée du backend
 function getVideo(id){
-exec('cd '+id+' | curl XGET -d http://adresseserveur/basededonnées/'+id, (error, stdout, stderr) =>{
+exec('curl XGET -d http://adresseserveur/basededonnées/'+id, (error, stdout, stderr) =>{
   if (error) {
     console.error(`exec error: ${error}`);
     return;
@@ -83,17 +72,11 @@ exec('cd '+id+' | curl XGET -d http://adresseserveur/basededonnées/'+id, (error
   console.log(`stdout: ${stdout}`);
   console.log(`stderr: ${stderr}`);
   });
-fs.writeFile('/'+id+'/', lyrics, (err) => {
-  // throws an error, you could also catch it here
-  if (err) throw err;
-
-  // success case, the file was saved
-  console.log('');
 }
 
 //fonction qui permet de récupérer la vidéo avec l'url
 function getUrlVideo(url){
-  exec('curl XGET -d '+url)
+  exec('curl XGET -d '+url{
   if (error) {
     console.error(`exec error: ${error}`);
     return;
@@ -109,31 +92,39 @@ app.post('/premierenvoi', jsonParser, (request, response) =>{
   var reqparsed = JSON.parse(reqjson);
   var id = reqparsed.id;
   //test checksum ou url?
-  if(reqparsed.url!=null){
-
-
+  if (reqparsed.url!=null){
+    getUrlVideo(reqparsed.url);
   }
-  // var type = checksum OU url
-
+  else if(reqparsed.checksum!=null){
+    //test si la vidéo existe déjà
+    getVideo(id);
+  }
+  else response.end("Erreur : pas d'url ou de checksum")
+  }
 // créer un dossier
   mkdirp('/'+id, function (err) {
     if(err) console.error(err)
     else console.log("dossier "+ id +" correctement créé")
     //créer un lock?
   });
-
-
-  //recevoir la video
-    getVideo(id);
+response.end("Bien reçu !")
 });
 
-app.post('/extractorVID', rawParser, (request, response) =>{
+app.post('/extractorVID', jsonParser, (request, response) =>{
   //on decode le base64
-  var rawParsed = request.body
-  var test = toType(rawParsed)
-  console.log(test)
-  var decodedData = base64.decode(rawParsed)
-  console.log(decodedData)
+  var reqparsed = request.body;
+  var checksum = reqparsed.checksum;
+  var id = reqparsed.id;
+  var type = reqparsed.extension;
+  var vidData = reqparsed.video;
+  var decodedData = base64.decode(vidData)
+  console.log(decodedData);
+  fs.writeFile('lechemin/'+cheksum+'.'+type, decodedData, (err) => {
+    // throws an error, you could also catch it here
+    if (err) throw err;
+
+    // success case, the file was saved
+    console.log('');
 });
 
   //créer un file avec les datas
@@ -141,13 +132,13 @@ app.post('/extractorVID', rawParser, (request, response) =>{
 })
 
 
-/*
-app.post('/extractorURL', urlParser, (request, response) =>{
+
+/*app.post('/extractorURL', urlParser, (request, response) =>{
   if(!request.body) { return response.end("Erreur avec l'url") }
   var urlreceived = request.body
 
-}
-*/
+}*/
+
 app.put('/', (request, response) =>{
   response.end("Got a PUT request")
 })

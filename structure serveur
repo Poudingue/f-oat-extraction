@@ -1,13 +1,13 @@
 
 Processus «Receptionniste» :
-    Écoute le backend
-    Attend un id et une checksum ou url de vidéo
+    Écoute le backend (ok)
+    Attend un id et une checksum ou url de vidéo (ok)
     Reçu ? {
         renvoyer id et les paramètres dispos
-        créer dossier de l'id (sauf si déjà présent)
+        créer dossier de l'id (sauf si déjà présent) (ok)
         créer un lock dans le dossier
         url ? {
-            Télécharger quoi qu'il arrive
+            Télécharger quoi qu'il arrive (ok)
         }
 
         Checksum pas encore present parmis les vidéos ? {
@@ -24,6 +24,9 @@ Processus «Receptionniste» :
             Sinon, lance l'extracteur
         }
     }
+
+
+--> ON REPART SUR VIDEO PUIS PARAMETRES
 
 Processus «Downloader» :
     récupère une vidéo depuis le back-end.
