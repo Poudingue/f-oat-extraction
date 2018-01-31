@@ -75,16 +75,23 @@ app.post('/param', jsonParser, (request, response) =>{
 
 //envoie la requête de get avec l'id à la base de donnée du backend
 function getVideo(id){
-exec('curl XGET -d http://adresseserveur/basededonnées/'+id, (error, stdout, stderr) =>{
-if (error) {
-  console.error(`exec error: ${error}`);
-  return;
-}
-console.log(`stdout: ${stdout}`);
-console.log(`stderr: ${stderr}`);
-});
+exec('cd '+id+' | curl XGET -d http://adresseserveur/basededonnées/'+id, (error, stdout, stderr) =>{
+  if (error) {
+    console.error(`exec error: ${error}`);
+    return;
+  }
+  console.log(`stdout: ${stdout}`);
+  console.log(`stderr: ${stderr}`);
+  });
+fs.writeFile('/'+id+'/', lyrics, (err) => {
+  // throws an error, you could also catch it here
+  if (err) throw err;
+
+  // success case, the file was saved
+  console.log('');
 }
 
+//fonction qui permet de récupérer la vidéo avec l'url
 function getUrlVideo(url){
   exec('curl XGET -d '+url)
   if (error) {
@@ -127,6 +134,8 @@ app.post('/extractorVID', rawParser, (request, response) =>{
   console.log(test)
   var decodedData = base64.decode(rawParsed)
   console.log(decodedData)
+});
+
   //créer un file avec les datas
   response.end("Got a POST request")
 })
