@@ -31,7 +31,7 @@ app.get('/', (request, response) =>{
 })
 
 //renvoie les paramètres de l'outil (juste un exemple test pour le moment)
-app.get('/outil_list', (request, response) =>{
+app.get('/outilparam', (request, response) =>{
   fs.readFile('/home/primary/service/service_server/ListeOutilParam/Outilname.js','utf8', (err, data)=>{
   /*Il faudra mettre le vrai path à un moment aussi
   fs.readFile('path sur la VM', 'utf8', (err, data) =>{*/
@@ -47,50 +47,14 @@ app.get('/outil_list', (request, response) =>{
       }
     }
   })
-})
-
-app.post('/param', jsonParser, (request, response) =>{
-  if(!request.body) return response.end("Erreur dans le paramétrage")
-  //on reçoit les paramètres en format JSON, il faut maintenant pouvoir l'exploiter pour le script
-  var param = request.body;
-  console.log(param)
-  var paramrecu = JSON.parse(param)
-  console.log(paramrecu);
-  var id = paramrecu.id
-  var option[] = {paramrecu.option1, paramrecu.option2, paramrecu.option3}
-  //notifier
-  response.end("Paramètres bien reçus")
-})
-
-//envoie la requête de get avec l'id à la base de donnée du backend
-function getVideo(id){
-exec('curl XGET -d http://adresseserveur/basededonnées/'+id, (error, stdout, stderr) =>{
-  if (error) {
-    console.error(`exec error: ${error}`);
-    return;
-  }
-  console.log(`stdout: ${stdout}`);
-  console.log(`stderr: ${stderr}`);
-  });
-}
-
-//fonction qui permet de récupérer la vidéo avec l'url
-function getUrlVideo(url){
-  exec('curl XGET -d '+url{
-  if (error) {
-    console.error(`exec error: ${error}`);
-    return;
-  }
-  console.log(`stdout: ${stdout}`);
-  console.log(`stderr: ${stderr}`);
-  });
-}
-
-app.post('/premierenvoi', jsonParser, (request, response) =>{
+});
+/*Le premier réel envoie de la Back-end avec id, ext, checksum/url*/
+app.post('/creation', jsonParser, (request, response) =>{
   if(!request.body) { return response.end("Erreur, pas de données") }
   var reqjson = requete.body;
   var reqparsed = JSON.parse(reqjson);
   var id = reqparsed.id;
+  var ext = reqparsed.ext;
   //test checksum ou url?
   if (reqparsed.url!=null){
     getUrlVideo(reqparsed.url);
@@ -99,8 +63,7 @@ app.post('/premierenvoi', jsonParser, (request, response) =>{
     //test si la vidéo existe déjà
     getVideo(id);
   }
-  else response.end("Erreur : pas d'url ou de checksum")
-  }
+  else response.end("Erreur : pas d'url ou de checksum");
 // créer un dossier
   mkdirp('/'+id, function (err) {
     if(err) console.error(err)
@@ -110,6 +73,21 @@ app.post('/premierenvoi', jsonParser, (request, response) =>{
 response.end("Bien reçu !")
 });
 
+/*Reçoit les paramètres*/
+app.post('/param', jsonParser, (request, response) =>{
+  if(!request.body) return response.end("Erreur dans le paramétrage")
+  //on reçoit les paramètres en format JSON, il faut maintenant pouvoir l'exploiter pour le script
+  var param = request.body;
+  console.log(param)
+  var paramrecu = JSON.parse(param)
+  console.log(paramrecu);
+  var id = paramrecu.id
+  new Array(paramrecu.option1, paramrecu.option2, paramrecu.option3);
+  //notifier
+  response.end("Paramètres bien reçus")
+});
+
+/*Reçoit la vidéo et décompose de manière adéquate*/
 app.post('/extractorVID', jsonParser, (request, response) =>{
   //on decode le base64
   var reqparsed = request.body;
@@ -129,22 +107,30 @@ app.post('/extractorVID', jsonParser, (request, response) =>{
 
   //créer un file avec les datas
   response.end("Got a POST request")
-})
+});
 
+//envoie la requête de get avec l'id à la base de donnée du backend
+function getVideo(id){
+exec('curl XGET http://adresseserveur/basededonnées/'+id, (error, stdout, stderr) =>{
+  if (error) {
+    console.error(`exec error: ${error}`);
+    return;
+  }
+  console.log(`stdout: ${stdout}`);
+  console.log(`stderr: ${stderr}`);
+  });
+}
 
-
-/*app.post('/extractorURL', urlParser, (request, response) =>{
-  if(!request.body) { return response.end("Erreur avec l'url") }
-  var urlreceived = request.body
-
-}*/
-
-app.put('/', (request, response) =>{
-  response.end("Got a PUT request")
-})
-
-app.delete('/', (request, response) =>{
-  response.end("Got a DELETE request")
-})
+//fonction qui permet de récupérer la vidéo avec l'url
+function getUrlVideo(url){
+  exec('curl XGET '+url, (error, stdout, stderr) =>{
+  if (error) {
+    console.error(`exec error: ${error}`);
+    return;
+  }
+  console.log(`stdout: ${stdout}`);
+  console.log(`stderr: ${stderr}`);
+  });
+}
 
 module.exports = app;

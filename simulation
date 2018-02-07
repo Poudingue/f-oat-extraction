@@ -1,6 +1,9 @@
-1) Backend -> Service : GET liste paramètre (voir la liste des outils?)
-2) Backend -> Service : POST URL ou les datas à utiliser -> on créé le dossier avec la video/url
-3) Backend -> Service : POST paramètres -> ajout au dossier les paramètres
-4)Lancer le script avec les paramètres reçus sur l'url ou le file en local (dans le dossier)
-5)Service -> Backend : POST le xml extrait.
-6) suppression au bout de X temps?
+liste script :
+_ createur.sh
+_ downurl.sh
+_ lanceur.sh
+_ concierge.sh
+_ extr.sh
+liste js (module fs):
+_ download from video (potentiellement js)
+_ unlock

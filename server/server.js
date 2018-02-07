@@ -4,7 +4,6 @@ var url = require('url')
 var app = require('../app')
 var debug = require('debug')('serveur_service:server');
 
-/*var port = normalizePort(process.env.PORT || '3000')*/
 var port = '8080'
 app.set('port', port)
 
