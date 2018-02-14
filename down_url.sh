@@ -5,6 +5,6 @@ if [ $# != 2 ];then
    exit 0
 else
    mkdir $1
-   wget -O "$1/video" "$2"
+   wget -O "$1/video.mp4" "$2"
 fi
 #done
