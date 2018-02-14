@@ -12,7 +12,7 @@ var mkdirp = require('mkdirp')
 app.set('view engine','ejs')
 
 //Middleware
-app.use("/assets", express.static('public'))
+app.use(bodyParser({uploadDir:'./uploads'}));
 var urlParser = bodyParser.urlencoded({limit: '100kb', extended: true})
 var vidParser = bodyParser.text({limit: '50mb', type : '*/*'})
 var jsonParser = bodyParser.json()
@@ -64,13 +64,8 @@ app.post('/creation', jsonParser, (request, response) =>{
     getVideo(id);
   }
   else response.end("Erreur : pas d'url ou de checksum");
-// créer un dossier
-  mkdirp('/'+id, function (err) {
-    if(err) console.error(err)
-    else console.log("dossier "+ id +" correctement créé")
-    //créer un lock?
-  });
-response.end("Bien reçu !")
+// CREATEUR.SH
+  response.end("Bien reçu !")
 });
 
 /*Reçoit les paramètres*/
@@ -83,7 +78,7 @@ app.post('/param', jsonParser, (request, response) =>{
   console.log(paramrecu);
   var id = paramrecu.id
   new Array(paramrecu.option1, paramrecu.option2, paramrecu.option3);
-  //notifier
+  //LANCEUR.SH
   response.end("Paramètres bien reçus")
 });
 
@@ -91,13 +86,20 @@ app.post('/param', jsonParser, (request, response) =>{
 app.post('/extractorVID', jsonParser, (request, response) =>{
   //on decode le base64
   var reqparsed = request.body;
+  //I can see the body ! Now parse the body ?
+  console.log(reqparsed);
   var checksum = reqparsed.checksum;
+  console.log(checksum);
   var id = reqparsed.id;
+  console.log(id);
   var type = reqparsed.extension;
+  console.log(type);
   var vidData = reqparsed.video;
-  var decodedData = base64.decode(vidData)
-  console.log(decodedData);
-  fs.writeFile('lechemin/'+cheksum+'.'+type, decodedData, (err) => {
+  console.log(vidData);
+  /*var decodedData = base64.decode(vidData)
+  console.log(decodedData);*/
+  //Ecrire dans le fichier ou utiliser downFile.sh
+  fs.writeFile('lechemin/'+id+checksum+'.'+type, vidData, (err) => {
     // throws an error, you could also catch it here
     if (err) throw err;
 
@@ -123,7 +125,7 @@ exec('curl XGET http://adresseserveur/basededonnées/'+id, (error, stdout, stder
 
 //fonction qui permet de récupérer la vidéo avec l'url
 function getUrlVideo(url){
-  exec('curl XGET '+url, (error, stdout, stderr) =>{
+  exec(''/*DOWNURL.sh*/, (error, stdout, stderr) =>{
   if (error) {
     console.error(`exec error: ${error}`);
     return;
