@@ -12,6 +12,6 @@ else
    echo "Lancement de l'extraction"
    ./video_segmentation "projects/$1/video.mp4" $params
    echo "extrait"
-   python3 gen_v5.py $1/video
+   python3 gen_v5.py projects/$1/video
 fi
 echo "Arrêt du script"
