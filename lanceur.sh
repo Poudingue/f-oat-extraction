@@ -10,8 +10,8 @@ else
    params=$(head -n 1 projects/$1/parameters)
    echo "params : "$params
    echo "Lancement de l'extraction"
-   echo "./video_segmentation projects/$1/video.mov $params"
-  ./video_segmentation "projects/$1/video.mov $params"
+   echo "./video_segmentation projects/$1/video.mp4 $params"
+  ./video_segmentation "projects/$1/video.mp4 $params"
    echo "extrait"
    python3 gen_v5.py projects/$1/video
 fi

@@ -1,17 +1,19 @@
 #!/bin/sh
-#Variante : cette version récupère une adrdess pour le fichier et le télécharge
+#cette version récupère une adrdess pour le fichier, et l'id du projet
 
-if [ $# != 3 ];then
-  echo "Premier argument : filename. Second : extension. Third : http adress"
+if [ $# < 2 ];then
+  echo "Arguments : http adress of the file and project id"
   exit 0
 else
-  wget $3
-  file=$1
+  url=$1
+  idprojet=$2
+  file=`basename "$url"`
+  wget "$url" -O "$file"
   extension=$2 #Récupérer l'extension et le nom auto
   echo "Lancement de l'extraction"
-  ./video_segmentation $file.$extension
-  echo "extrait"
-  python3 gen_v4.py $file $extension
+  ./video_segmentation $file
+  python3 gen_v5.py $file
   echo "xml généré"
+  exec ./expediteur.sh $idprojet &
 fi
 echo "Arrêt du script"
