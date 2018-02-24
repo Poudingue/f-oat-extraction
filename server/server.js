@@ -3,21 +3,18 @@ var fs = require('fs')
 var url = require('url')
 var app = require('../app')
 var debug = require('debug')('serveur_service:server');
+var ip = require("ip");
+console.dir ( ip.address() );
 
-var port = '8080'
+var port = '6342'
 app.set('port', port)
 
 var server = http.createServer(app)
 console.log("server created on port " + port)
 
-server.listen(port);
+server.listen(port, "0.0.0.0");
 server.on('error', onError);
 server.on('listening', onListening);
-server.on('connect', (request, response) => {
-  response.writeHead(200)
-  console.log("hi")
-  response.end('Connected')
-})
 
  /**
   * Normalize a port into a number, string, or false.

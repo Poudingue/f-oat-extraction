@@ -7,15 +7,14 @@ var url = require('url')
 const { exec } = require('child_process')
 var base64 = require('base-64')
 var mkdirp = require('mkdirp')
+var fileUpload = require('express-fileupload')
 
 //Moteur de template
 app.set('view engine','ejs')
 
 //Middleware
-app.use(bodyParser({uploadDir:'./uploads'}));
-var urlParser = bodyParser.urlencoded({limit: '100kb', extended: true})
-var vidParser = bodyParser.text({limit: '50mb', type : '*/*'})
-var jsonParser = bodyParser.json()
+var urlParser = express.urlencoded({limit: '100kb', extended: true})
+var jsonParser = express.json()
 //session?
 
 // Routes
@@ -82,34 +81,75 @@ app.post('/param', jsonParser, (request, response) =>{
   response.end("Paramètres bien reçus")
 });
 
+app.use(fileUpload());
 /*Reçoit la vidéo et décompose de manière adéquate*/
 app.post('/extractorVID', jsonParser, (request, response) =>{
-  //on decode le base64
-  var reqparsed = request.body;
-  //I can see the body ! Now parse the body ?
-  console.log(reqparsed);
-  var checksum = reqparsed.checksum;
+  if(!req.files)
+  var reqbody = JSON.stringify(request.body);
+/*
+  var checksum =  request.body.test.checksum;
   console.log(checksum);
-  var id = reqparsed.id;
+  var id =  request.body.test.id;
   console.log(id);
-  var type = reqparsed.extension;
+  var type =   request.body.extension;
   console.log(type);
-  var vidData = reqparsed.video;
-  console.log(vidData);
+  var vidData =   request.body.video;
+  console.log(vidData);*/
+
+  //create parser by moi-meme
+
+  var i=j=l=0;
+  var val = false;
+  var m = "";
+  var tab = new Array();
+  var c = reqbody[i];
+  while(c!='}'){
+      if(c==':'){
+        val=true;
+      }
+      if(c==','){
+        tab[j] = m;
+        m="";
+        j++;
+        val=false;
+      }
+      if(val){
+      m=m+c;
+      }
+      c=reqbody[i++];
+  }
+
+  var checksum = tab[1];
+  console.log("checksum ="+checksum);
+  var id =  tab[0];
+  console.log("id ="+id);
+  var type =   tab[2];
+  console.log("type ="+type);
+  var vidData =  tab[3];
+  console.log("data ="+vidData);
+
+
   /*var decodedData = base64.decode(vidData)
   console.log(decodedData);*/
   //Ecrire dans le fichier ou utiliser downFile.sh
-  fs.writeFile('lechemin/'+id+checksum+'.'+type, vidData, (err) => {
+  /*fs.writeFile('lechemin/'+id+checksum+'.'+type, vidData, (err) => {
     // throws an error, you could also catch it here
     if (err) throw err;
 
     // success case, the file was saved
     console.log('');
-});
+});*/
 
   //créer un file avec les datas
   response.end("Got a POST request")
 });
+
+function jsonParser(stringValue, key) {
+
+       var string = JSON.stringify(stringValue);
+       var objectValue = JSON.parse(string);
+       return objectValue[key];
+    }
 
 //envoie la requête de get avec l'id à la base de donnée du backend
 function getVideo(id){
