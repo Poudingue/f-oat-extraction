@@ -5,6 +5,7 @@ if [ $# != 2 ];then
    exit 0
 else
    mkdir "projects/$1"
+   echo "" > "projects/$1/parameters"
    wget -O "projects/$1/video.mp4" "$2"
 fi
 #done

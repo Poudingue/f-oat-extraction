@@ -6,5 +6,5 @@ if [ $# != 2 ];then
 else
    id=$1
    params=$2
-   echo $2 > projects/$1/parameters
+   echo " $2" > projects/$1/parameters
 fi
