@@ -6,6 +6,8 @@ if [ $# != 2 ];then
 else
    mkdir "projects/$1"
    echo "" > "projects/$1/parameters"
-   wget -O "projects/$1/video.mp4" "$2"
+   filename=`basename "$2"`
+   extension="${filename##*.}"
+   wget -O "projects/$1/video.$extension" "$2"
 fi
 #done
