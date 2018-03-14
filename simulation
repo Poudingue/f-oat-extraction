@@ -1,9 +1,10 @@
 liste script :
-_ createur.sh
-_ downurl.sh
-_ lanceur.sh
-_ concierge.sh
-_ extr.sh
+− set_parameters.sh
+− down_url.sh
+− lanceur.sh
+− make_deletable.sh
+− concierge.sh
+
 liste js (module fs):
 _ download from video (potentiellement js)
 _ unlock
