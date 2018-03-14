@@ -5,4 +5,4 @@ do
     rm -rf "projects/$filename"
 done
 # Vider la liste des projets "supprimables"
-rm -f "deletable_projects/*"
+rm -f "deletable_projects"/*
