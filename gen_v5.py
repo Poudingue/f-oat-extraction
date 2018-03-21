@@ -82,5 +82,5 @@ frames=""#Overload
 #Print de la concaténation des parties
 #print(file_intro+header+body+"</root>")
 text_file = open(name+".xml", "w")
-text_file.write(file_intro+header+body+"</root>")
+text_file.write(file_intro+body+"</root>")
 text_file.close()
