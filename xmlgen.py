@@ -52,6 +52,8 @@ for line in tab_sce:
 
 nb_sho, nb_sce=len(tab_sho), len(tab_sce)
 
+body=""
+
 for it_sce in range(nb_sce):
 	body += "\t<scene>\n"
 	body += "\t\t<sceneProperties>\n"
@@ -70,8 +72,11 @@ for it_sce in range(nb_sce):
 			for fra in fra_set:
 				if fra>=sho_beg[it_sho] and fra<=sho_end[it_sho]:
 					body += "\t\t\t<frame>\n"
-					body += "\t\t\t\t<shotProperties>\n"
-					body += "<timeId="+fra+"></timeId>\n"
+					body += "\t\t\t\t<frameProperties>\n"
+					body += "\t\t\t\t\t<timeId="+fra+"></timeId>\n"
+					body += "\t\t\t\t\t<actors>\n"
+					body += "\t\t\t\t\t</actors>\n"
+					body += "\t\t\t\t</frameProperties>\n"
 					body+="\t\t\t</frame>\n"
 			body += ("\t\t</shot>\n")
 	body += "\t</scene>\n"
