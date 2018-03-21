@@ -61,7 +61,7 @@ for it_sce in range(nb_sce):
 	for it_sho in range(nb_sho):
 		#If a shot is in the scene we add it
 		if(sho_beg[it_sho]>=sce_beg[it_sce] and sho_end[it_sho]<=sce_end[it_sce]):
-			body += ("\t\t<shot>\n"
+			body += "\t\t<shot>\n"
 			body += "\t\t\t<shotProperties>\n"
 			body += "\t\t\t\t<startFrame = "+str(sho_beg[it_sce])+"></startFrame>\n"
 			body += "\t\t\t\t<endFrame = "+str(sho_end[it_sce])+"></endFrame>\n"
