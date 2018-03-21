@@ -81,10 +81,8 @@ for it_sce in range(nb_sce):
 			body += ("\t\t</shot>\n")
 	body += "\t</scene>\n"
 
-frames=""#Overload
-
 #Print de la concaténation des parties
 #print(file_intro+header+body+"</root>")
-text_file = open(name+".xml", "w")
-text_file.write(file_intro+body+"</shot-extractor>")
+text_file = open("output.xml", "w")
+text_file.write(file_intro+body+"</shot-extractor>\n")
 text_file.close()
