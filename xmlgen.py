@@ -4,8 +4,8 @@ namefile = sys.argv[1]
 name, filetype = os.path.splitext(namefile)
 
 #En-tête : À l'heure actuelle non modifié
-file_intro = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>\n<root>\n"
-file_intro+="\t<version>0.4</version>\n\t<project path=\""+name+"."+filetype+"\">\n\t</project>\n"
+file_intro = "<?xml version=\"1.0\">\n
+file_intro += "<shot-extractor>\n"
 
 #Extraction des listes de numéro de frame vers un tableau de tableaux
 def tex2tab(name):
@@ -52,30 +52,34 @@ for line in tab_sce:
 
 nb_sho, nb_sce=len(tab_sho), len(tab_sce)
 
-#génération du texte pour les scènes
-body = "\t<scenes>\n"
 for it_sce in range(nb_sce):
-	body += "\t\t<Scene startFrame=\""+str(sce_beg[it_sce])+"\" endFrame=\""+str(sce_end[it_sce])+"\">\n"
-	#Renseigner ici des infos complémentaires sur la scène
+	body += "\t<scene>\n"
+	body += "\t\t<sceneProperties>\n"
+	body += "\t\t\t<startFrame = "+str(sce_beg[it_sce])+"></startFrame>\n"
+	body += "\t\t\t<endFrame = "+str(sce_end[it_sce])+"></endFrame>\n"
+	body += "\t\t</sceneProperties>\n"
 	for it_sho in range(nb_sho):
-		#Si un shot est inclus dans la scècne actuelle, on l'ajoute et on augmente order
+		#If a shot is in the scene we add it
 		if(sho_beg[it_sho]>=sce_beg[it_sce] and sho_end[it_sho]<=sce_end[it_sce]):
-			body += ("\t\t\t<shot startFrame=\""+str(sho_beg[it_sho])+"\" endFrame=\""+str(sho_end[it_sho])+"\">\n")
-			#On est dans un shot, on peut renseigner des infos complémentaires sur le shot
+			body += ("\t\t<shot>\n"
+				body += "\t\t\t<shotProperties>\n"
+				body += "\t\t\t\t<startFrame = "+str(sho_beg[it_sce])+"></startFrame>\n"
+				body += "\t\t\t\t<endFrame = "+str(sho_end[it_sce])+"></endFrame>\n"
+				body += "\t\t\t</shotProperties>\n"
+			#frames in the shot
 			for fra in fra_set:
 				if fra>=sho_beg[it_sho] and fra<=sho_end[it_sho]:
-					body+="\t\t\t\t<frame timeId=\""+fra+"\">\n"
-					#C'est ici qu'on injecterait des infos à l'échelle de la frame
-					body+="Info 1, 2, 3…"
-					body+="\t\t\t\t</frame>\n"
-			body += ("\t\t\t</shot>\n")
-	body += "\t\t</Scene>\n"
-body +="\t</scenes>\n"
+					body += "\t\t\t<frame>\n"
+					body += "\t\t\t\t<shotProperties>\n"
+					body += "<timeId="+fra+"></timeId>\n"
+					body+="\t\t\t</frame>\n"
+			body += ("\t\t</shot>\n")
+	body += "\t</scene>\n"
 
 frames=""#Overload
 
 #Print de la concaténation des parties
 #print(file_intro+header+body+"</root>")
 text_file = open(name+".xml", "w")
-text_file.write(file_intro+header+body+"</root>")
+text_file.write(file_intro+body+"</shot-extractor>")
 text_file.close()
