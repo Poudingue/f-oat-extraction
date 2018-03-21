@@ -74,9 +74,10 @@ for it_sce in range(nb_sce):
 					body += "\t\t\t<frame>\n"
 					body += "\t\t\t\t<frameProperties>\n"
 					body += "\t\t\t\t\t<timeId="+fra+"></timeId>\n"
-					body += "\t\t\t\t\t<actors>\n"
-					body += "\t\t\t\t\t</actors>\n"
 					body += "\t\t\t\t</frameProperties>\n"
+					# actors necessary ?
+					# body += "\t\t\t\t<actors>\n"
+					# body += "\t\t\t\t</actors>\n"
 					body+="\t\t\t</frame>\n"
 			body += ("\t\t</shot>\n")
 	body += "\t</scene>\n"
