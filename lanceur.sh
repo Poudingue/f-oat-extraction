@@ -10,7 +10,7 @@ else
     echo "Extraction launched…"
     ./video_segmentation projects/$1/video.*$params
     echo "Extracted"
-    python3 gen_v5.py projects/$1/video
+    python3 xmlgen.py projects/$1/video
     echo "Converted to xml"
     echo "Done"
 fi
