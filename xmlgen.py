@@ -83,6 +83,6 @@ for it_sce in range(nb_sce):
 
 #Print de la concaténation des parties
 #print(file_intro+header+body+"</root>")
-text_file = open("output.xml", "w")
+text_file = open("video.xml", "w")
 text_file.write(file_intro+body+"</shot-extractor>\n")
 text_file.close()
