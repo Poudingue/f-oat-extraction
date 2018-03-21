@@ -10,12 +10,6 @@ name, filetype = os.path.splitext(namefile)
 file_intro = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>\n<root>\n"
 file_intro+="\t<version>0.4</version>\n\t<project path=\""+name+"."+filetype+"\">\n\t</project>\n"
 
-#header. Remplissage à faire
-header="\t<header>\n"
-header+="\t\tINFOS À RAJOUTER\n"
-header+="\n\t</header>\n"
-
-
 #Extraction des listes de numéro de frame vers un tableau de tableaux
 def tex2tab(name):
 	file = open(name, "r")
