@@ -7,14 +7,16 @@ var url = require('url')
 const { exec } = require('child_process')
 var base64 = require('base-64')
 var mkdirp = require('mkdirp')
-var fileUpload = require('express-fileupload')
+var multer  = require('multer')
+var upload = multer({ dest: 'uploads/' })
 
 //Moteur de template
 app.set('view engine','ejs')
 
 //Middleware
-var urlParser = express.urlencoded({limit: '100kb', extended: true})
-var jsonParser = express.json()
+var urlParser = express.urlencoded({limit: '100kb', extended: true, type: "application/x-www-form-urlencoded"})
+var jsonParser = express.json({limit: '100kb', strict: false, type: "application/json"})
+
 //session?
 
 // Routes
@@ -71,31 +73,51 @@ app.post('/creation', jsonParser, (request, response) =>{
 app.post('/param', jsonParser, (request, response) =>{
   if(!request.body) return response.end("Erreur dans le paramétrage")
   //on reçoit les paramètres en format JSON, il faut maintenant pouvoir l'exploiter pour le script
-  var param = request.body;
-  console.log(param)
-  var paramrecu = JSON.parse(param)
-  console.log(paramrecu);
-  var id = paramrecu.id
-  new Array(paramrecu.option1, paramrecu.option2, paramrecu.option3);
-  //LANCEUR.SH
-  response.end("Paramètres bien reçus")
+  var p = request.body;
+  console.log(p);
+  var param = p.test.param;
+  var id = p.test.id;
+  console.log(id);
+  exec('bash set_parameters.sh '+id+', '+param, (error, stdout, stderr) =>{
+    if (error) {
+      console.error(`exec error: ${error}`);
+      return;
+    }
+    console.log(`stdout: ${stdout}`);
+    console.log(`stderr: ${stderr}`);
+    });
+  exec('bash lanceur.sh '+id, (error, stdout, stderr) =>{
+    if (error) {
+      console.error(`exec error: ${error}`);
+        return;
+    }
+    console.log(`stdout: ${stdout}`);
+    console.log(`stderr: ${stderr}`);
+    });
+  response.end("Paramètres bien reçus\n")
 });
 
-app.use(fileUpload());
-/*Reçoit la vidéo et décompose de manière adéquate*/
-app.post('/extractorVID', jsonParser, (request, response) =>{
-  if(!req.files)
-  var reqbody = JSON.stringify(request.body);
-/*
-  var checksum =  request.body.test.checksum;
-  console.log(checksum);
-  var id =  request.body.test.id;
-  console.log(id);
-  var type =   request.body.extension;
-  console.log(type);
-  var vidData =   request.body.video;
-  console.log(vidData);*/
 
+
+/*Reçoit la vidéo et décompose de manière adéquate*/
+app.post('/extractorVID', (request, response) =>{
+  if(!request.files)
+  return response.status(400).send('No files were uploaded.');
+
+  let reqbody = request.files.reqbody;
+
+  reqbody.mv('/uploadFile', (err) =>{
+    if(err)
+      return response.status(500).send(err);
+  });
+
+  let rdata = reqbody.data;
+  console.log(rdata);
+  let jdata = JSON.parse(rdata);
+  console.log(jdata)
+  let rjdata = JSON.stringify(rdata);
+  console.log(rjdata);
+/*
   //create parser by moi-meme
 
   var i=j=l=0;
@@ -127,7 +149,6 @@ app.post('/extractorVID', jsonParser, (request, response) =>{
   console.log("type ="+type);
   var vidData =  tab[3];
   console.log("data ="+vidData);
-
 
   /*var decodedData = base64.decode(vidData)
   console.log(decodedData);*/
@@ -164,8 +185,8 @@ exec('curl XGET http://adresseserveur/basededonnées/'+id, (error, stdout, stder
 }
 
 //fonction qui permet de récupérer la vidéo avec l'url
-function getUrlVideo(url){
-  exec(''/*DOWNURL.sh*/, (error, stdout, stderr) =>{
+function getUrlVideo(id,url){
+  exec('down_url.sh'+id+', '+url, (error, stdout, stderr) =>{
   if (error) {
     console.error(`exec error: ${error}`);
     return;

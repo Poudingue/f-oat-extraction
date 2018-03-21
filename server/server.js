@@ -2,11 +2,11 @@ var http = require('http')
 var fs = require('fs')
 var url = require('url')
 var app = require('../app')
-var debug = require('debug')('serveur_service:server');
+var debug = require('debug')('f-oat-extraction:server');
 var ip = require("ip");
 console.dir ( ip.address() );
 
-var port = '6342'
+var port = '8080'
 app.set('port', port)
 
 var server = http.createServer(app)
