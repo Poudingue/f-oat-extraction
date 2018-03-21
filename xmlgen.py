@@ -82,6 +82,6 @@ for it_sce in range(nb_sce):
 	body += "\t</scene>\n"
 
 #Print de la concaténation des parties
-text_file = open("video.xml", "w")
+text_file = open(name+".xml", "w")
 text_file.write(file_intro+body+"</shot-extractor>\n")
 text_file.close()
