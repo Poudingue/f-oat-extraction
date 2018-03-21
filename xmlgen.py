@@ -4,7 +4,7 @@ namefile = sys.argv[1]
 name, filetype = os.path.splitext(namefile)
 
 #En-tête : À l'heure actuelle non modifié
-file_intro = "<?xml version=\"1.0\">\n
+file_intro = "<?xml version=\"1.0\">\n"
 file_intro += "<shot-extractor>\n"
 
 #Extraction des listes de numéro de frame vers un tableau de tableaux
