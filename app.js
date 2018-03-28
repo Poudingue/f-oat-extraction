@@ -52,16 +52,16 @@ app.get('/outilparam', (request, response) =>{
 /*Le premier réel envoie de la Back-end avec id, ext, checksum/url*/
 app.post('/creation', jsonParser, (request, response) =>{
   if(!request.body) { return response.end("Erreur, pas de données") }
-  var reqjson = requete.body;
-  var reqparsed = JSON.parse(reqjson);
-  var id = reqparsed.id;
-  var ext = reqparsed.ext;
+  var reqjson = request.body;
+  console.log(reqjson);
+  var id = reqjson.id;
+  var ext = reqjson.ext;
   //test checksum ou url?
-  if (reqparsed.url!=null){
-    getUrlVideo(reqparsed.url);
+  if (reqjson.url!=null){
+    getUrlVideo(reqjson.url);
   }
-  else if(reqparsed.checksum!=null){
-    //test si la vidéo existe déjà
+  else if(reqjson.checksum!=null){
+    //demande la vidéo
     getVideo(id);
   }
   else response.end("Erreur : pas d'url ou de checksum");
@@ -70,7 +70,7 @@ app.post('/creation', jsonParser, (request, response) =>{
 });
 
 /*Reçoit les paramètres*/
-app.post('/param', jsonParser, (request, response) =>{
+app.put('/param', jsonParser, (request, response) =>{
   if(!request.body) return response.end("Erreur dans le paramétrage")
   //on reçoit les paramètres en format JSON, il faut maintenant pouvoir l'exploiter pour le script
   var p = request.body;
@@ -118,28 +118,6 @@ app.post('/extractorVID', (request, response) =>{
   let rjdata = JSON.stringify(rdata);
   console.log(rjdata);
 /*
-  //create parser by moi-meme
-
-  var i=j=l=0;
-  var val = false;
-  var m = "";
-  var tab = new Array();
-  var c = reqbody[i];
-  while(c!='}'){
-      if(c==':'){
-        val=true;
-      }
-      if(c==','){
-        tab[j] = m;
-        m="";
-        j++;
-        val=false;
-      }
-      if(val){
-      m=m+c;
-      }
-      c=reqbody[i++];
-  }
 
   var checksum = tab[1];
   console.log("checksum ="+checksum);
@@ -174,7 +152,7 @@ function jsonParser(stringValue, key) {
 
 //envoie la requête de get avec l'id à la base de donnée du backend
 function getVideo(id){
-exec('curl XGET http://adresseserveur/basededonnées/'+id, (error, stdout, stderr) =>{
+http.get('http://adresseserveur/basededonnées/'+id, (error, stdout, stderr) =>{
   if (error) {
     console.error(`exec error: ${error}`);
     return;
