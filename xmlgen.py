@@ -5,7 +5,7 @@ name, filetype = os.path.splitext(namefile)
 
 #En-tête : À l'heure actuelle non modifié
 file_intro = "<?xml version=\"1.0\">\n"
-file_intro += "<shot-extractor>\n"
+file_intro += "<extractorx1>\n"
 
 #Extraction des listes de numéro de frame vers un tableau de tableaux
 def tex2tab(name):
@@ -55,18 +55,20 @@ nb_sho, nb_sce=len(tab_sho), len(tab_sce)
 body=""
 
 for it_sce in range(nb_sce):
-	body += "\t<scene>\n"
+	body += "\t<scene "
+	body += "startFrame = \""+str(sce_beg[it_sce])+"\" "
+	body += "endFrame = \""+str(sce_end[it_sce])+"\"" 
+	body += ">\n"
 	body += "\t\t<sceneProperties>\n"
-	body += "\t\t\t<startFrame = "+str(sce_beg[it_sce])+"></startFrame>\n"
-	body += "\t\t\t<endFrame = "+str(sce_end[it_sce])+"></endFrame>\n"
 	body += "\t\t</sceneProperties>\n"
 	for it_sho in range(nb_sho):
 		#If a shot is in the scene we add it
 		if(sho_beg[it_sho]>=sce_beg[it_sce] and sho_end[it_sho]<=sce_end[it_sce]):
-			body += "\t\t<shot>\n"
+			body += "\t\t<shot "
+			body += "startFrame = \""+str(sho_beg[it_sho])+"\" "
+			body += "endFrame = \""+str(sho_end[it_sho])+"\""
+			body += ">\n"
 			body += "\t\t\t<shotProperties>\n"
-			body += "\t\t\t\t<startFrame = "+str(sho_beg[it_sho])+"></startFrame>\n"
-			body += "\t\t\t\t<endFrame = "+str(sho_end[it_sho])+"></endFrame>\n"
 			body += "\t\t\t</shotProperties>\n"
 			#frames in the shot
 			for fra in fra_set:
