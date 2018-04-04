@@ -24,7 +24,7 @@ def tex2tab(name):
 					i_word+=1
 				word=""
 			else: word+=c
-		if(word!="" and word!="0"): tab_line.append(word)
+		if(word!="" and word!="0"): tab_line.append(int(word))
 		tab_shots.append(tab_line)
 		nblines+=1
 	return tab_shots
@@ -41,14 +41,14 @@ sce_beg, sce_end = [], []
 fra_set = set()
 #Filling tables
 for line in tab_sho:
-	sho_beg.append(line[0])
-	sho_end.append(line[1])
-	for it in range(2, len(line)): fra_set.add(line[it])
+	sho_beg.append(int(line[0]))
+	sho_end.append(int(line[1]))
+	for it in range(2, len(line)): fra_set.add(int(line[it]))
 
 for line in tab_sce:
-	sce_beg.append(line[0])
-	sce_end.append(line[1])
-	for it in range(2, len(line)): fra_set.add(line[it])
+	sce_beg.append(int(line[0]))
+	sce_end.append(int(line[1]))
+	for it in range(2, len(line)): fra_set.add(int(line[it]))
 
 nb_sho, nb_sce=len(tab_sho), len(tab_sce)
 
@@ -63,7 +63,7 @@ for it_sce in range(nb_sce):
 	body += "\t\t</sceneProperties>\n"
 	for it_sho in range(nb_sho):
 		#If a shot is in the scene we add it
-		if(int(sho_beg[it_sho])>=int(sce_beg[it_sce]) and int(sho_end[it_sho])<=int(sce_end[it_sce])):
+		if(sho_beg[it_sho]>=sce_beg[it_sce] and sho_end[it_sho]<=sce_end[it_sce]):
 			body += "\t\t<shot "
 			body += "startFrame = \""+str(sho_beg[it_sho])+"\" "
 			body += "endFrame = \""+str(sho_end[it_sho])+"\""
@@ -72,9 +72,9 @@ for it_sce in range(nb_sce):
 			body += "\t\t\t</shotProperties>\n"
 			#frames in the shot
 			for fra in fra_set:
-				if int(fra)>=int(sho_beg[it_sho]) and int(fra)<=int(sho_end[it_sho]):
+				if fra>=sho_beg[it_sho] and fra<=sho_end[it_sho]:
 					body += "\t\t\t<frame "
-					body += "timeId = \""+fra+"\""
+					body += "timeId = \""+str(fra)+"\""
 					body += ">\n"
 					body += "\t\t\t\t<frameProperties>\n"
 					body += "\t\t\t\t</frameProperties>\n"
