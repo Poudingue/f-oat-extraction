@@ -17,13 +17,7 @@ app.set('view engine','ejs')
 var urlParser = express.urlencoded({limit: '100kb', extended: true, type: "application/x-www-form-urlencoded"})
 var jsonParser = express.json({limit: '100kb', strict: false, type: "application/json"})
 
-//session?
-
 // Routes
-
-var toType = function(obj) {
-  return ({}).toString.call(obj).match(/\s([a-zA-Z]+)/)[1].toLowerCase()
-}
 
 //peut-être renvoyer la liste des outils?
 app.get('/', (request, response) =>{
@@ -33,7 +27,7 @@ app.get('/', (request, response) =>{
 
 //renvoie les paramètres de l'outil (juste un exemple test pour le moment)
 app.get('/outilparam', (request, response) =>{
-  fs.readFile('/home/primary/service/service_server/ListeOutilParam/Outilname.js','utf8', (err, data)=>{
+  fs.readFile('param.js','utf8', (err, data)=>{
   /*Il faudra mettre le vrai path à un moment aussi
   fs.readFile('path sur la VM', 'utf8', (err, data) =>{*/
     if(err) throw err;
@@ -49,23 +43,24 @@ app.get('/outilparam', (request, response) =>{
     }
   })
 });
+
 /*Le premier réel envoie de la Back-end avec id, ext, checksum/url*/
-app.post('/creation', jsonParser, (request, response) =>{
-  if(!request.body) { return response.end("Erreur, pas de données") }
+app.put('/creation', jsonParser, (request, response) =>{
+  if(!request.body) {
+    return response.end("Erreur, pas de données")
+  }
   var reqjson = request.body;
   console.log(reqjson);
   var id = reqjson.id;
   var ext = reqjson.ext;
-  //test checksum ou url?
+  //CONCIERGE
   if (reqjson.url!=null){
     getUrlVideo(reqjson.url);
   }
   else if(reqjson.checksum!=null){
-    //demande la vidéo
     getVideo(id);
   }
   else response.end("Erreur : pas d'url ou de checksum");
-// CREATEUR.SH
   response.end("Bien reçu !")
 });
 
@@ -75,32 +70,18 @@ app.put('/param', jsonParser, (request, response) =>{
   //on reçoit les paramètres en format JSON, il faut maintenant pouvoir l'exploiter pour le script
   var p = request.body;
   console.log(p);
-  var param = p.test.param;
-  var id = p.test.id;
-  console.log(id);
-  exec('bash set_parameters.sh '+id+', '+param, (error, stdout, stderr) =>{
-    if (error) {
-      console.error(`exec error: ${error}`);
-      return;
-    }
-    console.log(`stdout: ${stdout}`);
-    console.log(`stderr: ${stderr}`);
-    });
-  exec('bash lanceur.sh '+id, (error, stdout, stderr) =>{
-    if (error) {
-      console.error(`exec error: ${error}`);
-        return;
-    }
-    console.log(`stdout: ${stdout}`);
-    console.log(`stderr: ${stderr}`);
-    });
+  var param = p.param;
+  var id = p.id;
+  setparam(id, param);
+  lanceur(id);
+  //mettre le xml dans un json
+  //
+  sendvideo(id,):
   response.end("Paramètres bien reçus\n")
 });
 
-
-
 /*Reçoit la vidéo et décompose de manière adéquate*/
-app.post('/extractorVID', (request, response) =>{
+/*app.post('/extractorVID', (request, response) =>{
   if(!request.files)
   return response.status(400).send('No files were uploaded.');
 
@@ -137,18 +118,11 @@ app.post('/extractorVID', (request, response) =>{
 
     // success case, the file was saved
     console.log('');
-});*/
+});
 
   //créer un file avec les datas
   response.end("Got a POST request")
-});
-
-function jsonParser(stringValue, key) {
-
-       var string = JSON.stringify(stringValue);
-       var objectValue = JSON.parse(string);
-       return objectValue[key];
-    }
+});*/
 
 //envoie la requête de get avec l'id à la base de donnée du backend
 function getVideo(id){
@@ -158,9 +132,9 @@ http.get('http://adresseserveur/basededonnées/'+id, (error, stdout, stderr) =>{
     return;
   }
   console.log(`stdout: ${stdout}`);
-  console.log(`stderr: ${stderr}`);
   });
 }
+console.log(`stderr: ${stderr}`);
 
 //fonction qui permet de récupérer la vidéo avec l'url
 function getUrlVideo(id,url){
@@ -172,6 +146,32 @@ function getUrlVideo(id,url){
   console.log(`stdout: ${stdout}`);
   console.log(`stderr: ${stderr}`);
   });
+}
+
+function setparam(id, param){
+  exec('bash set_parameters.sh '+id+', '+param, (error, stdout, stderr) =>{
+    if (error) {
+      console.error(`exec error: ${error}`);
+      return;
+    }
+    console.log(`stdout: ${stdout}`);
+    console.log(`stderr: ${stderr}`);
+    });
+}
+
+function lanceur(id){
+  exec('bash lanceur.sh '+id, (error, stdout, stderr) =>{
+    if (error) {
+      console.error(`exec error: ${error}`);
+        return;
+    }
+    console.log(`stdout: ${stdout}`);
+    console.log(`stderr: ${stderr}`);
+    });
+}
+
+function cleaner(id, url){
+
 }
 
 module.exports = app;
