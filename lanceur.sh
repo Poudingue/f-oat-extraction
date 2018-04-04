@@ -7,6 +7,7 @@ if [ $# != 1 ];then
 else
     echo "id : $1"
     params=$(head -n 1 projects/$1/parameters)
+    rm -f projects/$1/video.xml
     echo "Extraction launched…"
     ./video_segmentation projects/$1/video.*$params
     echo "Extracted"

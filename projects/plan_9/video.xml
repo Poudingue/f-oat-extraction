@@ -10,123 +10,7 @@
 		<shot startFrame = "122" endFrame = "211">
 			<shotProperties>
 			</shotProperties>
-			<frame timeId = "1756">
-				<frameProperties>
-				</frameProperties>
-			</frame>
-			<frame timeId = "2025">
-				<frameProperties>
-				</frameProperties>
-			</frame>
-			<frame timeId = "1432">
-				<frameProperties>
-				</frameProperties>
-			</frame>
-			<frame timeId = "1631">
-				<frameProperties>
-				</frameProperties>
-			</frame>
-			<frame timeId = "1649">
-				<frameProperties>
-				</frameProperties>
-			</frame>
-			<frame timeId = "1733">
-				<frameProperties>
-				</frameProperties>
-			</frame>
-			<frame timeId = "1350">
-				<frameProperties>
-				</frameProperties>
-			</frame>
-			<frame timeId = "1512">
-				<frameProperties>
-				</frameProperties>
-			</frame>
-			<frame timeId = "1445">
-				<frameProperties>
-				</frameProperties>
-			</frame>
-			<frame timeId = "2088">
-				<frameProperties>
-				</frameProperties>
-			</frame>
-			<frame timeId = "1580">
-				<frameProperties>
-				</frameProperties>
-			</frame>
-			<frame timeId = "166">
-				<frameProperties>
-				</frameProperties>
-			</frame>
-			<frame timeId = "1588">
-				<frameProperties>
-				</frameProperties>
-			</frame>
-			<frame timeId = "1862">
-				<frameProperties>
-				</frameProperties>
-			</frame>
-			<frame timeId = "1606">
-				<frameProperties>
-				</frameProperties>
-			</frame>
-			<frame timeId = "144">
-				<frameProperties>
-				</frameProperties>
-			</frame>
-			<frame timeId = "1487">
-				<frameProperties>
-				</frameProperties>
-			</frame>
-			<frame timeId = "1419">
-				<frameProperties>
-				</frameProperties>
-			</frame>
-			<frame timeId = "188">
-				<frameProperties>
-				</frameProperties>
-			</frame>
-			<frame timeId = "2044">
-				<frameProperties>
-				</frameProperties>
-			</frame>
-			<frame timeId = "1603">
-				<frameProperties>
-				</frameProperties>
-			</frame>
-			<frame timeId = "1956">
-				<frameProperties>
-				</frameProperties>
-			</frame>
-			<frame timeId = "2006">
-				<frameProperties>
-				</frameProperties>
-			</frame>
-			<frame timeId = "1572">
-				<frameProperties>
-				</frameProperties>
-			</frame>
-			<frame timeId = "1902">
-				<frameProperties>
-				</frameProperties>
-			</frame>
-			<frame timeId = "2099">
-				<frameProperties>
-				</frameProperties>
-			</frame>
-			<frame timeId = "1242">
-				<frameProperties>
-				</frameProperties>
-			</frame>
 			<frame timeId = "1537">
-				<frameProperties>
-				</frameProperties>
-			</frame>
-			<frame timeId = "1822">
-				<frameProperties>
-				</frameProperties>
-			</frame>
-			<frame timeId = "1600">
 				<frameProperties>
 				</frameProperties>
 			</frame>
@@ -134,11 +18,31 @@
 				<frameProperties>
 				</frameProperties>
 			</frame>
-			<frame timeId = "2077">
+			<frame timeId = "2044">
 				<frameProperties>
 				</frameProperties>
 			</frame>
-			<frame timeId = "1710">
+			<frame timeId = "1580">
+				<frameProperties>
+				</frameProperties>
+			</frame>
+			<frame timeId = "2006">
+				<frameProperties>
+				</frameProperties>
+			</frame>
+			<frame timeId = "1603">
+				<frameProperties>
+				</frameProperties>
+			</frame>
+			<frame timeId = "1512">
+				<frameProperties>
+				</frameProperties>
+			</frame>
+			<frame timeId = "2025">
+				<frameProperties>
+				</frameProperties>
+			</frame>
+			<frame timeId = "2077">
 				<frameProperties>
 				</frameProperties>
 			</frame>
@@ -146,11 +50,107 @@
 				<frameProperties>
 				</frameProperties>
 			</frame>
-			<frame timeId = "1296">
+			<frame timeId = "1649">
+				<frameProperties>
+				</frameProperties>
+			</frame>
+			<frame timeId = "1419">
+				<frameProperties>
+				</frameProperties>
+			</frame>
+			<frame timeId = "1600">
+				<frameProperties>
+				</frameProperties>
+			</frame>
+			<frame timeId = "1631">
+				<frameProperties>
+				</frameProperties>
+			</frame>
+			<frame timeId = "1862">
 				<frameProperties>
 				</frameProperties>
 			</frame>
 			<frame timeId = "1667">
+				<frameProperties>
+				</frameProperties>
+			</frame>
+			<frame timeId = "2099">
+				<frameProperties>
+				</frameProperties>
+			</frame>
+			<frame timeId = "166">
+				<frameProperties>
+				</frameProperties>
+			</frame>
+			<frame timeId = "1432">
+				<frameProperties>
+				</frameProperties>
+			</frame>
+			<frame timeId = "1710">
+				<frameProperties>
+				</frameProperties>
+			</frame>
+			<frame timeId = "1733">
+				<frameProperties>
+				</frameProperties>
+			</frame>
+			<frame timeId = "188">
+				<frameProperties>
+				</frameProperties>
+			</frame>
+			<frame timeId = "144">
+				<frameProperties>
+				</frameProperties>
+			</frame>
+			<frame timeId = "1588">
+				<frameProperties>
+				</frameProperties>
+			</frame>
+			<frame timeId = "2088">
+				<frameProperties>
+				</frameProperties>
+			</frame>
+			<frame timeId = "1956">
+				<frameProperties>
+				</frameProperties>
+			</frame>
+			<frame timeId = "1350">
+				<frameProperties>
+				</frameProperties>
+			</frame>
+			<frame timeId = "1606">
+				<frameProperties>
+				</frameProperties>
+			</frame>
+			<frame timeId = "1445">
+				<frameProperties>
+				</frameProperties>
+			</frame>
+			<frame timeId = "1487">
+				<frameProperties>
+				</frameProperties>
+			</frame>
+			<frame timeId = "1756">
+				<frameProperties>
+				</frameProperties>
+			</frame>
+			<frame timeId = "1572">
+				<frameProperties>
+				</frameProperties>
+			</frame>
+			<frame timeId = "1242">
+				<frameProperties>
+				</frameProperties>
+			</frame>
+			<frame timeId = "1296">
+				<frameProperties>
+				</frameProperties>
+			</frame>
+			<frame timeId = "1902">
+				<frameProperties>
+				</frameProperties>
+			</frame>
+			<frame timeId = "1822">
 				<frameProperties>
 				</frameProperties>
 			</frame>
@@ -178,11 +178,11 @@
 		<shot startFrame = "1406" endFrame = "1461">
 			<shotProperties>
 			</shotProperties>
-			<frame timeId = "1432">
+			<frame timeId = "1419">
 				<frameProperties>
 				</frameProperties>
 			</frame>
-			<frame timeId = "1445">
+			<frame timeId = "1432">
 				<frameProperties>
 				</frameProperties>
 			</frame>
@@ -190,7 +190,7 @@
 				<frameProperties>
 				</frameProperties>
 			</frame>
-			<frame timeId = "1419">
+			<frame timeId = "1445">
 				<frameProperties>
 				</frameProperties>
 			</frame>
@@ -198,15 +198,15 @@
 		<shot startFrame = "1462" endFrame = "1563">
 			<shotProperties>
 			</shotProperties>
+			<frame timeId = "1537">
+				<frameProperties>
+				</frameProperties>
+			</frame>
 			<frame timeId = "1512">
 				<frameProperties>
 				</frameProperties>
 			</frame>
 			<frame timeId = "1487">
-				<frameProperties>
-				</frameProperties>
-			</frame>
-			<frame timeId = "1537">
 				<frameProperties>
 				</frameProperties>
 			</frame>
@@ -230,10 +230,6 @@
 		<shot startFrame = "1597" endFrame = "1612">
 			<shotProperties>
 			</shotProperties>
-			<frame timeId = "1606">
-				<frameProperties>
-				</frameProperties>
-			</frame>
 			<frame timeId = "1603">
 				<frameProperties>
 				</frameProperties>
@@ -242,19 +238,19 @@
 				<frameProperties>
 				</frameProperties>
 			</frame>
+			<frame timeId = "1606">
+				<frameProperties>
+				</frameProperties>
+			</frame>
 		</shot>
 		<shot startFrame = "1613" endFrame = "1686">
 			<shotProperties>
 			</shotProperties>
-			<frame timeId = "1631">
-				<frameProperties>
-				</frameProperties>
-			</frame>
 			<frame timeId = "1649">
 				<frameProperties>
 				</frameProperties>
 			</frame>
-			<frame timeId = "166">
+			<frame timeId = "1631">
 				<frameProperties>
 				</frameProperties>
 			</frame>
@@ -262,11 +258,15 @@
 				<frameProperties>
 				</frameProperties>
 			</frame>
+			<frame timeId = "166">
+				<frameProperties>
+				</frameProperties>
+			</frame>
 		</shot>
 		<shot startFrame = "1687" endFrame = "1781">
 			<shotProperties>
 			</shotProperties>
-			<frame timeId = "1756">
+			<frame timeId = "1710">
 				<frameProperties>
 				</frameProperties>
 			</frame>
@@ -274,7 +274,7 @@
 				<frameProperties>
 				</frameProperties>
 			</frame>
-			<frame timeId = "1710">
+			<frame timeId = "1756">
 				<frameProperties>
 				</frameProperties>
 			</frame>
@@ -302,10 +302,6 @@
 		<shot startFrame = "1946" endFrame = "1986">
 			<shotProperties>
 			</shotProperties>
-			<frame timeId = "1956">
-				<frameProperties>
-				</frameProperties>
-			</frame>
 			<frame timeId = "1966">
 				<frameProperties>
 				</frameProperties>
@@ -314,19 +310,23 @@
 				<frameProperties>
 				</frameProperties>
 			</frame>
+			<frame timeId = "1956">
+				<frameProperties>
+				</frameProperties>
+			</frame>
 		</shot>
 		<shot startFrame = "1987" endFrame = "2065">
 			<shotProperties>
 			</shotProperties>
-			<frame timeId = "2025">
-				<frameProperties>
-				</frameProperties>
-			</frame>
 			<frame timeId = "2044">
 				<frameProperties>
 				</frameProperties>
 			</frame>
 			<frame timeId = "2006">
+				<frameProperties>
+				</frameProperties>
+			</frame>
+			<frame timeId = "2025">
 				<frameProperties>
 				</frameProperties>
 			</frame>
@@ -346,11 +346,11 @@
 				<frameProperties>
 				</frameProperties>
 			</frame>
-			<frame timeId = "2205">
+			<frame timeId = "2213">
 				<frameProperties>
 				</frameProperties>
 			</frame>
-			<frame timeId = "2213">
+			<frame timeId = "2205">
 				<frameProperties>
 				</frameProperties>
 			</frame>
@@ -358,7 +358,7 @@
 		<shot startFrame = "2232" endFrame = "2266">
 			<shotProperties>
 			</shotProperties>
-			<frame timeId = "2256">
+			<frame timeId = "2240">
 				<frameProperties>
 				</frameProperties>
 			</frame>
@@ -366,7 +366,7 @@
 				<frameProperties>
 				</frameProperties>
 			</frame>
-			<frame timeId = "2240">
+			<frame timeId = "2256">
 				<frameProperties>
 				</frameProperties>
 			</frame>
@@ -374,11 +374,11 @@
 		<shot startFrame = "2267" endFrame = "2304">
 			<shotProperties>
 			</shotProperties>
-			<frame timeId = "2276">
+			<frame timeId = "2285">
 				<frameProperties>
 				</frameProperties>
 			</frame>
-			<frame timeId = "2285">
+			<frame timeId = "2276">
 				<frameProperties>
 				</frameProperties>
 			</frame>
@@ -390,15 +390,11 @@
 		<shot startFrame = "2305" endFrame = "2728">
 			<shotProperties>
 			</shotProperties>
-			<frame timeId = "2410">
-				<frameProperties>
-				</frameProperties>
-			</frame>
-			<frame timeId = "2515">
-				<frameProperties>
-				</frameProperties>
-			</frame>
 			<frame timeId = "2620">
+				<frameProperties>
+				</frameProperties>
+			</frame>
+			<frame timeId = "2410">
 				<frameProperties>
 				</frameProperties>
 			</frame>
@@ -406,15 +402,15 @@
 				<frameProperties>
 				</frameProperties>
 			</frame>
+			<frame timeId = "2515">
+				<frameProperties>
+				</frameProperties>
+			</frame>
 		</shot>
 		<shot startFrame = "2729" endFrame = "2813">
 			<shotProperties>
 			</shotProperties>
-			<frame timeId = "2792">
-				<frameProperties>
-				</frameProperties>
-			</frame>
-			<frame timeId = "2750">
+			<frame timeId = "276">
 				<frameProperties>
 				</frameProperties>
 			</frame>
@@ -422,7 +418,11 @@
 				<frameProperties>
 				</frameProperties>
 			</frame>
-			<frame timeId = "276">
+			<frame timeId = "2792">
+				<frameProperties>
+				</frameProperties>
+			</frame>
+			<frame timeId = "2750">
 				<frameProperties>
 				</frameProperties>
 			</frame>

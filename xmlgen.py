@@ -78,7 +78,7 @@ for it_sce in range(nb_sce):
 					body += ">\n"
 					body += "\t\t\t\t<frameProperties>\n"
 					body += "\t\t\t\t</frameProperties>\n"
-					body+="\t\t\t</frame>\n"
+					body += "\t\t\t</frame>\n"
 			body += ("\t\t</shot>\n")
 	body += "\t</scene>\n"
 
