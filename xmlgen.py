@@ -57,13 +57,13 @@ body=""
 for it_sce in range(nb_sce):
 	body += "\t<scene "
 	body += "startFrame = \""+str(sce_beg[it_sce])+"\" "
-	body += "endFrame = \""+str(sce_end[it_sce])+"\"" 
+	body += "endFrame = \""+str(sce_end[it_sce])+"\""
 	body += ">\n"
 	body += "\t\t<sceneProperties>\n"
 	body += "\t\t</sceneProperties>\n"
 	for it_sho in range(nb_sho):
 		#If a shot is in the scene we add it
-		if(sho_beg[it_sho]>=sce_beg[it_sce] and sho_end[it_sho]<=sce_end[it_sce]):
+		if(int(sho_beg[it_sho])>=int(sce_beg[it_sce]) and int(sho_end[it_sho])<=int(sce_end[it_sce])):
 			body += "\t\t<shot "
 			body += "startFrame = \""+str(sho_beg[it_sho])+"\" "
 			body += "endFrame = \""+str(sho_end[it_sho])+"\""
@@ -72,7 +72,7 @@ for it_sce in range(nb_sce):
 			body += "\t\t\t</shotProperties>\n"
 			#frames in the shot
 			for fra in fra_set:
-				if fra>=sho_beg[it_sho] and fra<=sho_end[it_sho]:
+				if int(fra)>=int(sho_beg[it_sho]) and int(fra)<=int(sho_end[it_sho]):
 					body += "\t\t\t<frame "
 					body += "timeId = \""+fra+"\""
 					body += ">\n"
@@ -86,3 +86,5 @@ for it_sce in range(nb_sce):
 text_file = open(name+".xml", "w")
 text_file.write(file_intro+body+"</extractorx1>\n")
 text_file.close()
+
+print("done")
