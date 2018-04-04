@@ -27,21 +27,13 @@ app.get('/', (request, response) =>{
 
 //renvoie les paramètres de l'outil (juste un exemple test pour le moment)
 app.get('/outilparam', (request, response) =>{
-  fs.readFile('param.js','utf8', (err, data)=>{
-  /*Il faudra mettre le vrai path à un moment aussi
-  fs.readFile('path sur la VM', 'utf8', (err, data) =>{*/
-    if(err) throw err;
-    else {
-      try{
-        var parsedData = JSON.stringify(data);
-        console.log(parsedData);
-        response.write("\n Done ! \n")
-        response.end(parsedData);
-      } catch (e) {
-           console.error(e.message);
-      }
-    }
-  })
+  var data = fs.readFileSync('parameters.xsd','utf8', (err, data)=>{
+    if (err) {
+   return console.log(err);
+ }
+  console.log(data);
+});
+  response.end(data);
 });
 
 /*Le premier réel envoie de la Back-end avec id, ext, checksum/url*/
@@ -57,9 +49,9 @@ app.put('/creation', jsonParser, (request, response) =>{
   if (reqjson.url!=null){
     getUrlVideo(reqjson.url);
   }
-  else if(reqjson.checksum!=null){
+  /*else if(reqjson.checksum!=null){
     getVideo(id);
-  }
+  }*/
   else response.end("Erreur : pas d'url ou de checksum");
   response.end("Bien reçu !")
 });
@@ -76,7 +68,7 @@ app.put('/param', jsonParser, (request, response) =>{
   lanceur(id);
   //mettre le xml dans un json
   //
-  sendvideo(id,):
+  sendvideo(id,data);
   response.end("Paramètres bien reçus\n")
 });
 
@@ -125,7 +117,7 @@ app.put('/param', jsonParser, (request, response) =>{
 });*/
 
 //envoie la requête de get avec l'id à la base de donnée du backend
-function getVideo(id){
+/*function getVideo(id){
 http.get('http://adresseserveur/basededonnées/'+id, (error, stdout, stderr) =>{
   if (error) {
     console.error(`exec error: ${error}`);
@@ -134,7 +126,7 @@ http.get('http://adresseserveur/basededonnées/'+id, (error, stdout, stderr) =>{
   console.log(`stdout: ${stdout}`);
   });
 }
-console.log(`stderr: ${stderr}`);
+console.log(`stderr: ${stderr}`);*/
 
 //fonction qui permet de récupérer la vidéo avec l'url
 function getUrlVideo(id,url){
@@ -171,7 +163,14 @@ function lanceur(id){
 }
 
 function cleaner(id, url){
-
+  exec('bash concierge.sh '+id, (error, stdout, stderr) =>{
+    if (error) {
+      console.error(`exec error: ${error}`);
+        return;
+    }
+    console.log(`stdout: ${stdout}`);
+    console.log(`stderr: ${stderr}`);
+    });
 }
 
 module.exports = app;
