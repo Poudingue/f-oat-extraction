@@ -23,11 +23,11 @@ var jsonParser = express.json({limit: '100kb', strict: false, type: "application
 app.get('/', (request, response) =>{
   response.end("Ici le service d'extraction")
   //response.render('/pages/index')
-})
+});
 
 //renvoie les paramètres de l'outil (juste un exemple test pour le moment)
 app.get('/outilparam', (request, response) =>{
-  var data = fs.readFileSync('parameters.xsd','utf8', (err, data)=>{
+  var data = fs.readFileSync('../parameters.xsd','utf8', (err, data)=>{
     if (err) {
    return console.log(err);
  }
@@ -37,13 +37,13 @@ app.get('/outilparam', (request, response) =>{
 });
 
 /*Le premier réel envoie de la Back-end avec id, ext, checksum/url*/
-app.put('/creation', jsonParser, (request, response) =>{
+app.put('/creation/:_id', jsonParser, (request, response) =>{
   if(!request.body) {
     return response.end("Erreur, pas de données")
   }
   var reqjson = request.body;
   console.log(reqjson);
-  var id = reqjson.id;
+  var id = request.params._id;
   var ext = reqjson.ext;
   //CONCIERGE
   if (reqjson.url!=null){
@@ -57,13 +57,13 @@ app.put('/creation', jsonParser, (request, response) =>{
 });
 
 /*Reçoit les paramètres*/
-app.put('/param', jsonParser, (request, response) =>{
+app.put('/param/:_id', jsonParser, (request, response) =>{
   if(!request.body) return response.end("Erreur dans le paramétrage")
   //on reçoit les paramètres en format JSON, il faut maintenant pouvoir l'exploiter pour le script
   var p = request.body;
   console.log(p);
   var param = p.param;
-  var id = p.id;
+  var id = request.params._id;
   setparam(id, param);
   lanceur(id);
   //mettre le xml dans un json
