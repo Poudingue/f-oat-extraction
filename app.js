@@ -9,6 +9,7 @@ var base64 = require('base-64')
 var mkdirp = require('mkdirp')
 var multer  = require('multer')
 var upload = multer({ dest: 'uploads/' })
+var jsonfile = require('jsonfile')
 
 //Moteur de template
 app.set('view engine','ejs')
@@ -66,8 +67,8 @@ app.put('/param/:_id', jsonParser, (request, response) =>{
   var id = request.params._id;
   setparam(id, param);
   lanceur(id);
-  //mettre le xml dans un json
-  //
+  var data;
+  jsonfile.writeFileSync('projects/'+id+'/video.xml', data);
   sendvideo(id,data);
   response.end("Paramètres bien reçus\n")
 });
@@ -130,7 +131,7 @@ console.log(`stderr: ${stderr}`);*/
 
 //fonction qui permet de récupérer la vidéo avec l'url
 function getUrlVideo(id,url){
-  exec('down_url.sh'+id+', '+url, (error, stdout, stderr) =>{
+  exec('down_url.sh'+id+' '+url, (error, stdout, stderr) =>{
   if (error) {
     console.error(`exec error: ${error}`);
     return;
@@ -141,7 +142,7 @@ function getUrlVideo(id,url){
 }
 
 function setparam(id, param){
-  exec('bash set_parameters.sh '+id+', '+param, (error, stdout, stderr) =>{
+  exec('bash set_parameters.sh '+id+' '+param, (error, stdout, stderr) =>{
     if (error) {
       console.error(`exec error: ${error}`);
       return;
