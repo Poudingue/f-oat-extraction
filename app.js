@@ -9,6 +9,7 @@ var base64 = require('base-64')
 var mkdirp = require('mkdirp')
 var multer  = require('multer')
 var upload = multer({ dest: 'uploads/' })
+var jsonfile = require('jsonfile')
 
 //Moteur de template
 app.set('view engine','ejs')
@@ -67,8 +68,8 @@ app.put('/param/:_id', jsonParser, (request, response) =>{
   var id = request.params._id;
   setparam(id, param);
   lanceur(id);
-  //mettre le xml dans un json
-  //
+  var data;
+  jsonfile.writeFileSync('projects/'+id+'/video.xml', data);
   sendvideo(id,data);
   response.end("Paramètres bien reçus\n")
 });
