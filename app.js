@@ -42,14 +42,14 @@ app.put('/creation/:_id', jsonParser, (request, response) =>{
   if(!request.body) {
     return response.end("Erreur, pas de données")
   }
+  console.log(request.body);
   var reqjson = request.body;
   console.log(reqjson);
   var id = request.params._id;
   var ext = reqjson.ext;
-  var url = reqjson.url;
-  cleaner();
-  if (url!=null){
-    getUrlVideo(url);
+  cleaner(id);
+  if (reqjson.url!=null){
+    getUrlVideo(id,reqjson.url);
   }
   /*else if(reqjson.checksum!=null){
     getVideo(id);
@@ -146,7 +146,7 @@ console.log(`stderr: ${stderr}`);*/
 
 //fonction qui permet de récupérer la vidéo avec l'url
 function getUrlVideo(id,url){
-  exec('down_url.sh'+id+' '+url, (error, stdout, stderr) =>{
+  exec('bash ../down_url.sh '+id+' '+url, (error, stdout, stderr) =>{
   if (error) {
     console.error(`exec error: ${error}`);
     return;
@@ -157,7 +157,7 @@ function getUrlVideo(id,url){
 }
 
 function setparam(id, param){
-  exec('bash set_parameters.sh '+id+' '+param, (error, stdout, stderr) =>{
+  exec('bash ../set_parameters.sh '+id+' '+param, (error, stdout, stderr) =>{
     if (error) {
       console.error(`exec error: ${error}`);
       return;
@@ -168,7 +168,7 @@ function setparam(id, param){
 }
 
 function lanceur(id){
-  exec('bash lanceur.sh '+id, (error, stdout, stderr) =>{
+  exec('bash ../lanceur.sh '+id, (error, stdout, stderr) =>{
     if (error) {
       console.error(`exec error: ${error}`);
         return;
@@ -178,8 +178,8 @@ function lanceur(id){
     });
 }
 
-function cleaner(){
-  exec('bash concierge.sh', (error, stdout, stderr) =>{
+function cleaner(id){
+  exec('bash ../concierge.sh '+id, (error, stdout, stderr) =>{
     if (error) {
       console.error(`exec error: ${error}`);
         return;
