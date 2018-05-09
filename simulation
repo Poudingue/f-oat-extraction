@@ -1,16 +1,8 @@
-liste script :
-− set_parameters.sh
-− down_url.sh
-− lanceur.sh
-− make_deletable.sh
-− concierge.sh
+todo :
+xml to string before sending
+http.put et renvoyer la donnée correctement
+multi part?
 
-liste js (module fs):
-_ download from video (potentiellement js)
-_ unlock
-
--> il faut finir les routes vers moi (chez moi et chez eux)
--> créer les routes vers eux (chez moi et chez eux)
--> xml dans json et envoyer
--> multipart fichier?
-->
+tests :
+non-bloquant/bloquant
+si tout est fonctionnel

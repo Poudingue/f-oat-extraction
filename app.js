@@ -9,7 +9,7 @@ var base64 = require('base-64')
 var mkdirp = require('mkdirp')
 var multer  = require('multer')
 var upload = multer({ dest: 'uploads/' })
-var jsonfile = require('jsonfile')
+const fse = require('fs-extra')
 
 //Moteur de template
 app.set('view engine','ejs')
@@ -46,9 +46,10 @@ app.put('/creation/:_id', jsonParser, (request, response) =>{
   console.log(reqjson);
   var id = request.params._id;
   var ext = reqjson.ext;
-  //CONCIERGE
-  if (reqjson.url!=null){
-    getUrlVideo(reqjson.url);
+  var url = reqjson.url;
+  cleaner();
+  if (url!=null){
+    getUrlVideo(url);
   }
   /*else if(reqjson.checksum!=null){
     getVideo(id);
@@ -63,15 +64,29 @@ app.put('/param/:_id', jsonParser, (request, response) =>{
   //on reçoit les paramètres en format JSON, il faut maintenant pouvoir l'exploiter pour le script
   var p = request.body;
   console.log(p);
+  var addr = request.ip
+  var port = this.request.remotePort
   var param = p.param;
   var id = request.params._id;
+  //definis les parametres
   setparam(id, param);
+  //lance l'extracteur
   lanceur(id);
+  //xml to string
   var data;
-  jsonfile.writeFileSync('projects/'+id+'/video.xml', data);
-  sendvideo(id,data);
+  data = xmltostring(id,data);
+  //renvoie le xml avec un put au back-end
+  if (data!=null){
+    sendvideo(id,data,addr,port);
+  }
+  else{
+    response.end("erreur durant l'extraction \n");
+  }
+  //rend le projet 'deletable'
+  makedel(id);
   response.end("Paramètres bien reçus\n")
 });
+
 
 /*Reçoit la vidéo et décompose de manière adéquate*/
 /*app.post('/extractorVID', (request, response) =>{
@@ -163,8 +178,8 @@ function lanceur(id){
     });
 }
 
-function cleaner(id, url){
-  exec('bash concierge.sh '+id, (error, stdout, stderr) =>{
+function cleaner(){
+  exec('bash concierge.sh', (error, stdout, stderr) =>{
     if (error) {
       console.error(`exec error: ${error}`);
         return;
@@ -173,5 +188,47 @@ function cleaner(id, url){
     console.log(`stderr: ${stderr}`);
     });
 }
+
+function xmltostring(id,data){
+fse.readFile('projects/'+id+'/video.xml',data)
+.then(() => console.log('success!'))
+.catch(err => console.error(err))
+return data;
+}
+
+function sendvideo(id, data, addr, port){
+  var options = {
+    host: addr,
+    port: port,
+    path: '/api/project/:'+id,
+    method: 'PUT'
+  }
+  var req = http.request(options, function(res) {
+  console.log('STATUS: ' + res.statusCode);
+  console.log('HEADERS: ' + JSON.stringify(res.headers));
+  res.setEncoding('utf8');
+  res.on('data', function (chunk) {
+  console.log('BODY: ' + chunk);
+  });
+  });
+
+  req.on('error', function(e) {
+console.log('problem with request: ' + e.message);
+  });
+
+  req.write(data);
+  req.end();
+}
+
+function makedel(id){
+  exec('bash make_deletable.sh '+id, (error, stdout, stderr) =>{
+    if (error) {
+      console.error(`exec error: ${error}`);
+      return;
+    }
+    console.log(`stdout: ${stdout}`);
+    console.log(`stderr: ${stderr}`);
+    });
+  }
 
 module.exports = app;
