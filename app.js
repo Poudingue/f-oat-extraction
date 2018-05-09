@@ -47,7 +47,7 @@ app.put('/creation/:_id', jsonParser, (request, response) =>{
   console.log(reqjson);
   var id = request.params._id;
   var ext = reqjson.ext;
-  cleaner(id);
+  cleaner();
   if (reqjson.url!=null){
     getUrlVideo(id,reqjson.url);
   }
@@ -178,8 +178,8 @@ function lanceur(id){
     });
 }
 
-function cleaner(id){
-  exec('bash ../concierge.sh '+id, (error, stdout, stderr) =>{
+function cleaner(){
+  exec('bash ../concierge.sh', (error, stdout, stderr) =>{
     if (error) {
       console.error(`exec error: ${error}`);
         return;
