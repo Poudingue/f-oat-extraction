@@ -11,8 +11,8 @@
             </xs:simpleContent>
           </xs:complexType>
         </xs:element>
-        <xs:element type="xs:string" name="trans_type" minOccurs="0" maxOccurs="1"/>
-        <xs:element type="xs:string" name="shots" minOccurs="0" maxOccurs="1"/>
+        <xs:element type="xs:string" name="trans_type" minOccurs="0" maxOccurs="1" fixed=""/>
+        <xs:element type="xs:string" name="shots" minOccurs="0" maxOccurs="1" fixed=""/>
       </xs:sequence>
     </xs:complexType>
   </xs:element>
