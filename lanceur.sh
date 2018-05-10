@@ -9,9 +9,9 @@ else
     params=$(head -n 1 projects/$1/parameters)
     rm -f projects/$1/video.xml
     echo "Extraction launched…"
-    ./video_segmentation projects/$1/video.*$params
+    bash ../video_segmentation projects/$1/video.*$params
     echo "Extracted"
-    python3 xmlgen.py projects/$1/video
+    python3 ../xmlgen.py projects/$1/video
     echo "Converted to xml"
     echo "Done"
 fi

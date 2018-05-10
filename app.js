@@ -10,6 +10,7 @@ var mkdirp = require('mkdirp')
 var multer  = require('multer')
 var upload = multer({ dest: 'uploads/' })
 const fse = require('fs-extra')
+var execp = require('child-process-promise').exec;
 
 //Moteur de template
 app.set('view engine','ejs')
@@ -65,23 +66,12 @@ app.put('/param/:_id', jsonParser, (request, response) =>{
   var p = request.body;
   console.log(p);
   var addr = request.ip
-  var port = this.request.remotePort
   var param = p.param;
   var id = request.params._id;
-  //definis les parametres
-  setparam(id, param);
-  //lance l'extracteur
-  lanceur(id);
-  //xml to string
   var data;
-  data = xmltostring(id,data);
-  //renvoie le xml avec un put au back-end
-  if (data!=null){
-    sendvideo(id,data,addr,port);
-  }
-  else{
-    response.end("erreur durant l'extraction \n");
-  }
+  //definis les parametres.
+  /*à travers setparam, on appelle lanceur, qui appelle xmltostring, qui appelle sendvideo, avec des promesses*/
+  setparam(id, param,data,addr);
   //rend le projet 'deletable'
   makedel(id);
   response.end("Paramètres bien reçus\n")
@@ -155,27 +145,33 @@ function getUrlVideo(id,url){
   console.log(`stderr: ${stderr}`);
   });
 }
-
-function setparam(id, param){
-  exec('bash ../set_parameters.sh '+id+' '+param, (error, stdout, stderr) =>{
-    if (error) {
-      console.error(`exec error: ${error}`);
-      return;
-    }
+//met les paramètres avec une promesse pour lanceur
+function setparam(id, param, data, addr){
+  execp('bash ../set_parameters.sh '+id+' '+param)
+  .then(function (result) {
+    var stdout = result.stdout;
+    var stderr = result.stderr;
     console.log(`stdout: ${stdout}`);
     console.log(`stderr: ${stderr}`);
-    });
+    lanceur(id,data,addr)
+    })
+    .catch(function(err){
+      console.error('ERROR: ', err);
+    })
 }
-
-function lanceur(id){
-  exec('bash ../lanceur.sh '+id, (error, stdout, stderr) =>{
-    if (error) {
-      console.error(`exec error: ${error}`);
-        return;
-    }
+//lance l'extraction avec une promesse pour xmltostring
+function lanceur(id,data,addr){
+  execp('bash ../lanceur.sh '+id)
+  .then(function (result) {
+    var stdout = result.stdout;
+    var stderr = result.stderr;
     console.log(`stdout: ${stdout}`);
     console.log(`stderr: ${stderr}`);
-    });
+    xmltostring(id,data,addr)
+    })
+    .catch(function(err){
+      console.error('ERROR: ', err);
+    })
 }
 
 function cleaner(){
@@ -189,17 +185,18 @@ function cleaner(){
     });
 }
 
-function xmltostring(id,data){
-fse.readFile('projects/'+id+'/video.xml',data)
-.then(() => console.log('success!'))
+//passe le xml en string, avec une promesse pour sendvideo
+function xmltostring(id,data,addr){
+fse.readFile('/projects/'+id+'/video.xml',data)
+.then(() => sendvideo(id, data, addr))
 .catch(err => console.error(err))
-return data;
 }
 
-function sendvideo(id, data, addr, port){
+//envoie la video extraite et traitée au back-end
+function sendvideo(id, data, addr){
   var options = {
     host: addr,
-    port: port,
+    port: 3000,
     path: '/api/project/:'+id,
     method: 'PUT'
   }
@@ -221,7 +218,7 @@ console.log('problem with request: ' + e.message);
 }
 
 function makedel(id){
-  exec('bash make_deletable.sh '+id, (error, stdout, stderr) =>{
+  exec('bash ../make_deletable.sh '+id, (error, stdout, stderr) =>{
     if (error) {
       console.error(`exec error: ${error}`);
       return;
