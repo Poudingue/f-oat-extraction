@@ -11,6 +11,7 @@ var multer  = require('multer')
 var upload = multer({ dest: 'uploads/' })
 const fse = require('fs-extra')
 var execp = require('child-process-promise').exec;
+var axios = require("axios");
 
 //Moteur de template
 app.set('view engine','ejs')
@@ -198,7 +199,6 @@ fse.readFile('projects/'+id+'/video.xml',"utf8",function(err,data){
   if(err){
     console.log(err);
   }
-  console.log(data);
   sendvideo(id, data, addr)
 });
 //.then(() => sendvideo(id, data, addr))
@@ -207,26 +207,13 @@ fse.readFile('projects/'+id+'/video.xml',"utf8",function(err,data){
 
 //envoie la video extraite et traitée au back-end
 function sendvideo(id, data, addr){
-  console.log(data);
-  var options = {
-    host: addr,
-    port: 3000,
-    path: '/api/project/'+id,
-    method: 'PUT'
-  }
-  var req = http.request(options, function(res) {
-  res.setEncoding('utf8');
-  res.on('data', function (chunk) {
-  console.log('BODY: ' + chunk);
-  });
+
+
+  axios.put('http://localhost:3000/api/project/'+id,{"data" :data})
+  .then(function(response){
+    console.log(response.statusCode);
   });
 
-  req.on('error', function(e) {
-console.log('problem with request: ' + e.message);
-  });
-
-  req.write(data);
-  req.end();
 }
 
 function makedel(id){
