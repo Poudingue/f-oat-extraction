@@ -4,8 +4,7 @@ namefile = sys.argv[1]
 name, filetype = os.path.splitext(namefile)
 
 #En-tête : À l'heure actuelle non modifié
-file_intro = "<?xml version=\"1.0\">\n"
-file_intro += "<extractorx1>\n"
+file_intro = "<shot-extract>\n"
 
 #Extraction des listes de numéro de frame vers un tableau de tableaux
 def tex2tab(name):
@@ -84,7 +83,7 @@ for it_sce in range(nb_sce):
 
 #Print de la concaténation des parties
 text_file = open(name+".xml", "w")
-text_file.write(file_intro+body+"</extractorx1>\n")
+text_file.write(file_intro+body+"</shot-extract>\n")
 text_file.close()
 
 print("done")
