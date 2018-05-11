@@ -71,7 +71,17 @@ app.put('/param/:_id', jsonParser, (request, response) =>{
   var data;
   //definis les parametres.
   /*à travers setparam, on appelle lanceur, qui appelle xmltostring, qui appelle sendvideo, avec des promesses*/
-  setparam(id, param,data,addr);
+  //setparam(id, param,data,addr);
+
+  execp('bash ../set_parameters.sh '+id+' '+param)
+  .then(execp('bash ../lanceur.sh '+id))
+  .then(xmltostring(id,data,addr))
+  .catch(function(err){
+    console.error(err);
+  })
+
+
+
   //rend le projet 'deletable'
   makedel(id);
   response.end("Paramètres bien reçus\n")
@@ -167,7 +177,7 @@ function lanceur(id,data,addr){
     var stderr = result.stderr;
     console.log(`stdout: ${stdout}`);
     console.log(`stderr: ${stderr}`);
-    xmltostring(id,data,addr)
+    xmltostring(id,data,addr);
     })
     .catch(function(err){
       console.error('ERROR: ', err);
@@ -187,13 +197,20 @@ function cleaner(){
 
 //passe le xml en string, avec une promesse pour sendvideo
 function xmltostring(id,data,addr){
-fse.readFile('/projects/'+id+'/video.xml',data)
-.then(() => sendvideo(id, data, addr))
-.catch(err => console.error(err))
+fse.readFile('projects/'+id+'/video.xml',"utf8",function(err,data){
+  if(err){
+    console.log(err);
+  }
+  console.log(data);
+  sendvideo(id, data, addr)
+});
+//.then(() => sendvideo(id, data, addr))
+//.catch(err => console.error(err))
 }
 
 //envoie la video extraite et traitée au back-end
 function sendvideo(id, data, addr){
+  console.log(data);
   var options = {
     host: addr,
     port: 3000,
