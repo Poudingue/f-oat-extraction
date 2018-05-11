@@ -74,8 +74,12 @@ app.put('/param/:_id', jsonParser, (request, response) =>{
   //setparam(id, param,data,addr);
 
   execp('bash ../set_parameters.sh '+id+' '+param)
-  .then(execp('bash ../lanceur.sh '+id))
-  .then(xmltostring(id,data,addr))
+  .then(function(result){
+    execp('bash ../lanceur.sh '+id).then(function(result){
+      xmltostring(id,data,addr);
+    });
+  })
+  //.then(xmltostring(id,data,addr))
   .catch(function(err){
     console.error(err);
   })
@@ -92,14 +96,11 @@ app.put('/param/:_id', jsonParser, (request, response) =>{
 /*app.post('/extractorVID', (request, response) =>{
   if(!request.files)
   return response.status(400).send('No files were uploaded.');
-
   let reqbody = request.files.reqbody;
-
   reqbody.mv('/uploadFile', (err) =>{
     if(err)
       return response.status(500).send(err);
   });
-
   let rdata = reqbody.data;
   console.log(rdata);
   let jdata = JSON.parse(rdata);
@@ -107,7 +108,6 @@ app.put('/param/:_id', jsonParser, (request, response) =>{
   let rjdata = JSON.stringify(rdata);
   console.log(rjdata);
 /*
-
   var checksum = tab[1];
   console.log("checksum ="+checksum);
   var id =  tab[0];
@@ -116,18 +116,15 @@ app.put('/param/:_id', jsonParser, (request, response) =>{
   console.log("type ="+type);
   var vidData =  tab[3];
   console.log("data ="+vidData);
-
   /*var decodedData = base64.decode(vidData)
   console.log(decodedData);*/
   //Ecrire dans le fichier ou utiliser downFile.sh
   /*fs.writeFile('lechemin/'+id+checksum+'.'+type, vidData, (err) => {
     // throws an error, you could also catch it here
     if (err) throw err;
-
     // success case, the file was saved
     console.log('');
 });
-
   //créer un file avec les datas
   response.end("Got a POST request")
 });*/
