@@ -7,7 +7,7 @@ else
     mkdir -p "projects/$1"
     echo "" > "projects/$1/parameters"
     filename=`basename "$2"`
-    extension="${filename##*.}"
+    extension="mp4"
     wget -O "projects/$1/video.$extension" "$2"
-    
+
 fi

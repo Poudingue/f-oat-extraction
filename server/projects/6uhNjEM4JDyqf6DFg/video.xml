@@ -1,0 +1,202 @@
+<shot-extract>
+	<scene startFrame = "1" endFrame = "303">
+		<sceneProperties>
+		</sceneProperties>
+		<shot startFrame = "1" endFrame = "109">
+			<shotProperties>
+			</shotProperties>
+			<frame timeId = "28">
+				<frameProperties>
+				</frameProperties>
+			</frame>
+			<frame timeId = "55">
+				<frameProperties>
+				</frameProperties>
+			</frame>
+			<frame timeId = "82">
+				<frameProperties>
+				</frameProperties>
+			</frame>
+		</shot>
+		<shot startFrame = "110" endFrame = "303">
+			<shotProperties>
+			</shotProperties>
+			<frame timeId = "158">
+				<frameProperties>
+				</frameProperties>
+			</frame>
+			<frame timeId = "206">
+				<frameProperties>
+				</frameProperties>
+			</frame>
+			<frame timeId = "254">
+				<frameProperties>
+				</frameProperties>
+			</frame>
+		</shot>
+	</scene>
+	<scene startFrame = "304" endFrame = "1082">
+		<sceneProperties>
+		</sceneProperties>
+		<shot startFrame = "304" endFrame = "365">
+			<shotProperties>
+			</shotProperties>
+			<frame timeId = "319">
+				<frameProperties>
+				</frameProperties>
+			</frame>
+			<frame timeId = "334">
+				<frameProperties>
+				</frameProperties>
+			</frame>
+			<frame timeId = "349">
+				<frameProperties>
+				</frameProperties>
+			</frame>
+		</shot>
+		<shot startFrame = "366" endFrame = "428">
+			<shotProperties>
+			</shotProperties>
+			<frame timeId = "396">
+				<frameProperties>
+				</frameProperties>
+			</frame>
+			<frame timeId = "411">
+				<frameProperties>
+				</frameProperties>
+			</frame>
+			<frame timeId = "381">
+				<frameProperties>
+				</frameProperties>
+			</frame>
+		</shot>
+		<shot startFrame = "429" endFrame = "522">
+			<shotProperties>
+			</shotProperties>
+			<frame timeId = "452">
+				<frameProperties>
+				</frameProperties>
+			</frame>
+			<frame timeId = "475">
+				<frameProperties>
+				</frameProperties>
+			</frame>
+			<frame timeId = "498">
+				<frameProperties>
+				</frameProperties>
+			</frame>
+		</shot>
+		<shot startFrame = "523" endFrame = "569">
+			<shotProperties>
+			</shotProperties>
+			<frame timeId = "534">
+				<frameProperties>
+				</frameProperties>
+			</frame>
+			<frame timeId = "545">
+				<frameProperties>
+				</frameProperties>
+			</frame>
+			<frame timeId = "556">
+				<frameProperties>
+				</frameProperties>
+			</frame>
+		</shot>
+		<shot startFrame = "570" endFrame = "630">
+			<shotProperties>
+			</shotProperties>
+			<frame timeId = "585">
+				<frameProperties>
+				</frameProperties>
+			</frame>
+			<frame timeId = "600">
+				<frameProperties>
+				</frameProperties>
+			</frame>
+			<frame timeId = "615">
+				<frameProperties>
+				</frameProperties>
+			</frame>
+		</shot>
+		<shot startFrame = "631" endFrame = "708">
+			<shotProperties>
+			</shotProperties>
+			<frame timeId = "650">
+				<frameProperties>
+				</frameProperties>
+			</frame>
+			<frame timeId = "669">
+				<frameProperties>
+				</frameProperties>
+			</frame>
+			<frame timeId = "688">
+				<frameProperties>
+				</frameProperties>
+			</frame>
+		</shot>
+		<shot startFrame = "709" endFrame = "780">
+			<shotProperties>
+			</shotProperties>
+			<frame timeId = "726">
+				<frameProperties>
+				</frameProperties>
+			</frame>
+			<frame timeId = "743">
+				<frameProperties>
+				</frameProperties>
+			</frame>
+			<frame timeId = "760">
+				<frameProperties>
+				</frameProperties>
+			</frame>
+		</shot>
+		<shot startFrame = "781" endFrame = "886">
+			<shotProperties>
+			</shotProperties>
+			<frame timeId = "807">
+				<frameProperties>
+				</frameProperties>
+			</frame>
+			<frame timeId = "833">
+				<frameProperties>
+				</frameProperties>
+			</frame>
+			<frame timeId = "859">
+				<frameProperties>
+				</frameProperties>
+			</frame>
+		</shot>
+		<shot startFrame = "887" endFrame = "1034">
+			<shotProperties>
+			</shotProperties>
+			<frame timeId = "923">
+				<frameProperties>
+				</frameProperties>
+			</frame>
+			<frame timeId = "959">
+				<frameProperties>
+				</frameProperties>
+			</frame>
+			<frame timeId = "995">
+				<frameProperties>
+				</frameProperties>
+			</frame>
+		</shot>
+		<shot startFrame = "1035" endFrame = "1082">
+			<shotProperties>
+			</shotProperties>
+			<frame timeId = "1046">
+				<frameProperties>
+				</frameProperties>
+			</frame>
+			<frame timeId = "1057">
+				<frameProperties>
+				</frameProperties>
+			</frame>
+			<frame timeId = "1068">
+				<frameProperties>
+				</frameProperties>
+			</frame>
+		</shot>
+	</scene>
+</shot-extract>

@@ -34,13 +34,13 @@ app.get('/outilparam', (request, response) =>{
     if (err) {
    return console.log(err);
  }
-  console.log(data);
 });
   response.end(data);
 });
 
 /*Le premier réel envoie de la Back-end avec id, ext, checksum/url*/
 app.put('/creation/:_id', jsonParser, (request, response) =>{
+
   if(!request.body) {
     return response.end("Erreur, pas de données")
   }
@@ -51,13 +51,13 @@ app.put('/creation/:_id', jsonParser, (request, response) =>{
   var ext = reqjson.ext;
   cleaner();
   if (reqjson.url!=null){
-    getUrlVideo(id,reqjson.url);
+    getUrlVideo(id,reqjson.url,response);
   }
   /*else if(reqjson.checksum!=null){
     getVideo(id);
   }*/
   else response.end("Erreur : pas d'url ou de checksum");
-  response.end("Bien reçu !")
+  //response.end("Bien reçu !")
 });
 
 /*Reçoit les paramètres*/
@@ -65,7 +65,6 @@ app.put('/param/:_id', jsonParser, (request, response) =>{
   if(!request.body) return response.end("Erreur dans le paramétrage")
   //on reçoit les paramètres en format JSON, il faut maintenant pouvoir l'exploiter pour le script
   var p = request.body;
-  console.log(p);
   var addr = request.ip
   var param = p.param;
   var id = request.params._id;
@@ -143,14 +142,9 @@ http.get('http://adresseserveur/basededonnées/'+id, (error, stdout, stderr) =>{
 console.log(`stderr: ${stderr}`);*/
 
 //fonction qui permet de récupérer la vidéo avec l'url
-function getUrlVideo(id,url){
-  exec('bash ../down_url.sh '+id+' '+url, (error, stdout, stderr) =>{
-  if (error) {
-    console.error(`exec error: ${error}`);
-    return;
-  }
-  console.log(`stdout: ${stdout}`);
-  console.log(`stderr: ${stderr}`);
+function getUrlVideo(id,url,response){
+  execp('bash ../down_url.sh '+id+' '+url).then(function(result){
+    response.end("ok!");
   });
 }
 //met les paramètres avec une promesse pour lanceur
@@ -195,11 +189,13 @@ function cleaner(){
 
 //passe le xml en string, avec une promesse pour sendvideo
 function xmltostring(id,data,addr){
+  console.log("debut xml to string");
 fse.readFile('projects/'+id+'/video.xml',"utf8",function(err,data){
   if(err){
     console.log(err);
   }
-  sendvideo(id, data, addr)
+
+  sendvideo(id, data, addr);
 });
 //.then(() => sendvideo(id, data, addr))
 //.catch(err => console.error(err))
@@ -207,11 +203,12 @@ fse.readFile('projects/'+id+'/video.xml',"utf8",function(err,data){
 
 //envoie la video extraite et traitée au back-end
 function sendvideo(id, data, addr){
-
-
+  console.log("start send video");
   axios.put('http://localhost:3000/api/project/'+id,{"data" :data})
   .then(function(response){
     console.log(response.statusCode);
+  }).catch(function(error){
+    console.log(error);
   });
 
 }
